@@ -1512,7 +1512,7 @@ regInspectClass <- R6::R6Class(
             for (factor in self$options$factors)
                 boxArray$addItem(key=factor)
 
-            vars <- c(self$options$dep, self$options$covs)
+            vars <- c(self$options$covs, self$options$dep)
             if (length(vars) >= 2) {
                 side <- max(450, 150 * length(vars))
                 self$results$plots$matrix$setSize(side, side)
@@ -1542,7 +1542,11 @@ regInspectClass <- R6::R6Class(
             if ( ! isTRUE(self$options$scatMatrix) || is.null(self$options$dep))
                 return(FALSE)
 
-            vars <- c(self$options$dep, self$options$covs)
+            # dep last: the lower-triangle layout puts the higher-indexed
+            # variable of each pair on y, so this keeps the dependent
+            # variable on y whenever it appears, instead of on x against
+            # every covariate.
+            vars <- c(self$options$covs, self$options$dep)
             if (length(vars) < 2)
                 return(FALSE)
 
@@ -1743,6 +1747,12 @@ regInspectClass <- R6::R6Class(
                                                    hjust=0, vjust=1.3,
                                                    label=sprintf('r = %.2f', r),
                                                    colour=textColour, size=2.6) +
+                                # ggtheme first for its discrete colour/fill
+                                # scales (so a grouped panel matches the
+                                # descriptive scatters' group colours);
+                                # theme_minimal() only replaces the theme
+                                # part, the scales from ggtheme stick.
+                                ggtheme +
                                 ggplot2::theme_minimal(base_size=6) +
                                 ggplot2::theme(
                                     legend.position='none',
