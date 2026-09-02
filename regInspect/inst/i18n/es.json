@@ -1,0 +1,516 @@
+{
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es",
+                "plural_forms": "nplurals=2; plural=n != 1;"
+            },
+            "'{var}' contains negative values. Negative weights are not permitted.": [
+                "'{var}' contiene valores negativos. Pesos negativos no se permiten."
+            ],
+            "{ciWidth}% Confidence Interval": [
+                "Intervalo de Confianza al {ciWidth}%"
+            ],
+            "{item1} and {item2}": [
+                "{item1} y {item2}"
+            ],
+            "{list}, {nextItem}": [
+                "{list}, {nextItem}"
+            ],
+            "{list}, and {lastItem}": [
+                "{list}, y {lastItem}"
+            ],
+            "{varType} of linear regression model{modelNo}": [
+                "{varType} del modelo de regresión lineal{modelNo}"
+            ],
+            "%": [
+                "%"
+            ],
+            "`Model Coefficients - ${ dep }`": [
+                "`Coeficientes del Modelo - ${ dep }`"
+            ],
+            "⁻ mean - 1SD, <sup>μ</sup> mean, ⁺ mean + 1SD": [
+                "⁻ media - 1DT, <sup>μ</sup> media, ⁺ media + 1DT"
+            ],
+            "a box/violin plot of the dependent variable by each factor.": [
+                "un diagrama de caja/violín de la variable dependiente por cada factor."
+            ],
+            "A clone of jmv's Linear Regression, exploring the relationship between a continuous dependent variable and one or more continuous and/or categorical explanatory variables, with scatter plots added throughout: observed data (partial residuals by default, or raw values) and prediction intervals on the Estimated Marginal Means plots, and a separate Plots tab with descriptive scatter/box plots of the analysed variables.": [
+                "Un clon de la Regresión Lineal de jmv que explora la relación entre una variable dependiente continua y una o más variables explicativas continuas y/o categóricas, con gráficos de dispersión añadidos en todo el análisis: datos observados (residuos parciales por defecto, o valores brutos) e intervalos de predicción en los gráficos de Medias Marginales Estimadas, y una pestaña de Gráficos independiente con diagramas de dispersión/caja descriptivos de las variables analizadas."
+            ],
+            "A clone of jmv's Linear Regression, with scatter plots added throughout: observed data (partial residuals or raw values) and prediction intervals on the Estimated Marginal Means plots, and a separate Plots tab with descriptive scatter/box plots of the analysed variables.": [
+                "Un clon de la Regresión Lineal de jmv, con gráficos de dispersión añadidos en todo el análisis: datos observados (residuos parciales o valores brutos) e intervalos de predicción en los gráficos de Medias Marginales Estimadas, y una pestaña de Gráficos independiente con diagramas de dispersión/caja descriptivos de las variables analizadas."
+            ],
+            "a matrix of small scatterplots for the dependent variable and every covariate.": [
+                "una matriz de diagramas de dispersión pequeños para la variable dependiente y cada covariable."
+            ],
+            "a prediction interval band/bars alongside the confidence interval, describing where a new observation at the plotted reference point would be expected to fall.": [
+                "una banda o barras de intervalo de predicción junto al intervalo de confianza, que describe dónde se esperaría que cayera una nueva observación en el punto de referencia representado."
+            ],
+            "a table containing estimated marginal means": [
+                "una tabla que contiene las medias marginales estimadas"
+            ],
+            "a table of ANOVA results": [
+                "una tabla de resultados ANOVA"
+            ],
+            "a table of model coefficients": [
+                "una tabla de coeficientes del modelo"
+            ],
+            "a table of normality tests": [
+                "una tabla de pruebas de normalidad"
+            ],
+            "Add New Block": [
+                "Añadir Nuevo Bloque"
+            ],
+            "Add New Term": [
+                "Añadir Nuevo Término"
+            ],
+            "Adjusted R²": [
+                "R² corregida"
+            ],
+            "AIC": [
+                "AIC"
+            ],
+            "an annotated scatterplot (fitted line, r, p, equation) of the dependent variable against each covariate.": [
+                "un diagrama de dispersión anotado (línea ajustada, r, p, ecuación) de la variable dependiente frente a cada covariable."
+            ],
+            "an array of model specific results": [
+                "una matriz de resultados específicos del modelo"
+            ],
+            "an array of the estimated marginal means plots + tables": [
+                "una matriz de gráficos y tablas de medias marginales estimadas"
+            ],
+            "Annotation": [
+                "Anotación"
+            ],
+            "ANOVA test": [
+                "Prueba ANOVA"
+            ],
+            "Assumption Checks": [
+                "Comprobación de Supuestos"
+            ],
+            "Autocorrelation": [
+                "Autocorrelación"
+            ],
+            "Autocorrelation test": [
+                "Prueba de autocorrelación"
+            ],
+            "BIC": [
+                "BIC"
+            ],
+            "Block {0}": [
+                "Bloque {0}"
+            ],
+            "Block 1": [
+                "Bloque 1"
+            ],
+            "Blocks": [
+                "Bloques"
+            ],
+            "Box plot": [
+                "Diagrama de caja"
+            ],
+            "Collinearity statistics": [
+                "Estadísticas de colinealidad"
+            ],
+            "Collinearity Statistics": [
+                "Estadísticas de Colinealidad"
+            ],
+            "Colour by": [
+                "Colorear por"
+            ],
+            "colours points by this factor in the descriptive scatterplots and the scatterplot matrix.": [
+                "colorea los puntos según este factor en los diagramas de dispersión descriptivos y en la matriz de dispersión."
+            ],
+            "Comparison": [
+                "Comparación"
+            ],
+            "Confidence band": [
+                "Banda de confianza"
+            ],
+            "Confidence interval": [
+                "Intervalo de confianza"
+            ],
+            "Confidence level": [
+                "Nivel de confianza"
+            ],
+            "Cook's distance": [
+                "Distancia de Cook"
+            ],
+            "Cook's Distance": [
+                "Distancia de Cook"
+            ],
+            "Covariates": [
+                "Covariables"
+            ],
+            "Data Summary": [
+                "Resumen de Datos"
+            ],
+            "Dependent by Factor": [
+                "Dependiente por Factor"
+            ],
+            "Dependent by factors": [
+                "Dependiente por factores"
+            ],
+            "Dependent by Factors": [
+                "Dependiente por Factores"
+            ],
+            "Dependent Variable": [
+                "Variable Dependiente"
+            ],
+            "Dependent vs. covariates": [
+                "Dependiente frente a covariables"
+            ],
+            "Dependent vs. Covariates": [
+                "Dependiente frente a Covariables"
+            ],
+            "Descriptive Scatterplots": [
+                "Diagramas de Dispersión Descriptivos"
+            ],
+            "df": [
+                "gl"
+            ],
+            "df1": [
+                "gl1"
+            ],
+            "df2": [
+                "gl2"
+            ],
+            "drag variables here": [
+                "arrastre las variables aquí"
+            ],
+            "draw the analysed observations on the marginal means plot. 'Partial residuals' (default) adds back each observation's residual to the plotted term's own fitted contribution, so the cloud stays correct on the plot's adjusted scale -- with a single predictor this is identical to the raw dependent variable. 'Raw values' plots the dependent variable itself, which is only on the same scale as the plot when the model has no other predictors. Suppressed on an axis that bins a covariate to -1SD/Mean/+1SD, where no observation has a real position.": [
+                "representa las observaciones analizadas en el gráfico de medias marginales. 'Residuos parciales' (por defecto) añade a la contribución ajustada propia del término representado el residuo de cada observación, de modo que la nube de puntos permanece correcta en la escala ajustada del gráfico -- con un único predictor, esto es idéntico a la variable dependiente bruta. 'Valores brutos' representa la propia variable dependiente, que solo está en la misma escala que el gráfico cuando el modelo no tiene otros predictores. Se omite en un eje que agrupa una covariable en -1DT/Media/+1DT, donde ninguna observación tiene una posición real."
+            ],
+            "Durbin–Watson Test for Autocorrelation": [
+                "Prueba Durbin-Watson de Autocorrelación"
+            ],
+            "DW Statistic": [
+                "Estadístico DW"
+            ],
+            "Equal cell weights": [
+                "Ponderación igual de celdas"
+            ],
+            "Estimate": [
+                "Estimador"
+            ],
+            "Estimated Marginal Means": [
+                "Medias Marginales Estimadas"
+            ],
+            "Estimated Marginal Means - {term}": [
+                "Medias Marginales Estimadas - {term}"
+            ],
+            "F test": [
+                "Prueba F"
+            ],
+            "Factor '{factor}' needs to have at least 2 levels": [
+                "El factor ‘{factor}’ requiere al menos 2 niveles"
+            ],
+            "Factors": [
+                "Factores"
+            ],
+            "Fit Measures": [
+                "Medidas de Ajuste"
+            ],
+            "Fitted": [
+                "Ajustados"
+            ],
+            "Fitted line": [
+                "Línea ajustada"
+            ],
+            "General Options": [
+                "Opciones generales"
+            ],
+            "Grand mean (simple coding)": [
+                "Media global (codificación simple)"
+            ],
+            "Intercept": [
+                "Constante"
+            ],
+            "Interval": [
+                "Intervalo"
+            ],
+            "Linear regression with observed-data & descriptive plots": [
+                "Regresión lineal con datos observados y gráficos descriptivos"
+            ],
+            "Lower": [
+                "Más bajo"
+            ],
+            "Mahalanobis ChiSq": [
+                "Chi-Cuadrado de Mahalanobis"
+            ],
+            "Mahalanobis distance": [
+                "Distancia de Mahalanobis"
+            ],
+            "Mahalanobis Distance": [
+                "Distancia de Mahalanobis"
+            ],
+            "Mahalanobis distance (Chi sq.)": [
+                "Distancia de Mahalanobis (Chi-Cuadr.)"
+            ],
+            "Mahalanobis distance (p)": [
+                "Distancia de Mahalanobis (p)"
+            ],
+            "Mahalanobis distance can only be calculated for models with two or more covariates": [
+                "La distancia de Mahalanobis puede calcularse únicamente para modelos con dos o más covariables"
+            ],
+            "Mahalanobis p": [
+                "p de Mahalanobis"
+            ],
+            "Marginal Mean": [
+                "Media Marginal"
+            ],
+            "Marginal Means": [
+                "Medias Marginales"
+            ],
+            "Marginal means plots": [
+                "Gráficos de medias marginales"
+            ],
+            "Marginal means tables": [
+                "Tablas de medias marginales"
+            ],
+            "Max": [
+                "Máx"
+            ],
+            "Mean": [
+                "Media"
+            ],
+            "Mean Square": [
+                "Media Cuadrática"
+            ],
+            "Median": [
+                "Mediana"
+            ],
+            "Min": [
+                "Mín"
+            ],
+            "Model": [
+                "Modelo"
+            ],
+            "Model Builder": [
+                "Constructor del Modelo"
+            ],
+            "Model Coefficients": [
+                "Coeficientes del Modelo"
+            ],
+            "Model Comparisons": [
+                "Comparación de Modelos"
+            ],
+            "Model Fit": [
+                "Ajuste del Modelo"
+            ],
+            "Model Fit Measures": [
+                "Medidas de Ajuste del Modelo"
+            ],
+            "Model Specific Results": [
+                "Resultados Específicos del Modelo"
+            ],
+            "Models estimated using sample size of N={n}": [
+                "Modelos estimados usando un tamaño de muestra de N={n}"
+            ],
+            "None": [
+                "Ninguno"
+            ],
+            "Normality test": [
+                "Prueba de normalidad"
+            ],
+            "Normality Test (Shapiro-Wilk)": [
+                "Prueba de Normalidad (Shapiro-Wilk)"
+            ],
+            "Observed data": [
+                "Datos observados"
+            ],
+            "Observed data not shown: '{var}' is a covariate here, binned to -1SD/Mean/+1SD -- no observation has a real position on it.": [
+                "Datos observados no mostrados: '{var}' es una covariable aquí, agrupada en -1DT/Media/+1DT -- ninguna observación tiene una posición real en ella."
+            ],
+            "Omnibus ANOVA Test": [
+                "Prueba ANOVA Omnibus"
+            ],
+            "Omnibus Test": [
+                "Prueba Omnibus"
+            ],
+            "Output": [
+                "Resultado"
+            ],
+            "Overall Model Test": [
+                "Prueba Global del Modelo"
+            ],
+            "p <": [
+                "p <"
+            ],
+            "Partial residuals": [
+                "Residuos parciales"
+            ],
+            "Participants (rows) below p-threshold": [
+                "Participantes (filas) por debajo del umbral de p"
+            ],
+            "Plots": [
+                "Gráficos"
+            ],
+            "Predicted values": [
+                "Predicciones"
+            ],
+            "Prediction band": [
+                "Banda de predicción"
+            ],
+            "Prediction interval": [
+                "Intervalo de predicción"
+            ],
+            "Prediction interval for a new observation at this reference point ({vars} held at their mean, or averaged across levels).": [
+                "Intervalo de predicción para una nueva observación en este punto de referencia ({vars} fijadas en su media, o promediadas entre niveles)."
+            ],
+            "Predictor": [
+                "Predictor"
+            ],
+            "Predictors": [
+                "Predictores"
+            ],
+            "Q-Q Plot": [
+                "Gráfica Q-Q"
+            ],
+            "Q-Q plot of residuals": [
+                "Gráfica Q-Q de los residuos"
+            ],
+            "R²": [
+                "R²"
+            ],
+            "Range": [
+                "Rango"
+            ],
+            "Raw values": [
+                "Valores brutos"
+            ],
+            "Reference Level": [
+                "Nivel de Referencia"
+            ],
+            "Reference level (dummy coding)": [
+                "Nivel de referencia (codificación indicadora)"
+            ],
+            "Reference Levels": [
+                "Niveles de Referencia"
+            ],
+            "Regression": [
+                "Regresión"
+            ],
+            "Regression Inspector": [
+                "Inspector de Regresión"
+            ],
+            "Represents grand mean": [
+                "Representa la media global"
+            ],
+            "Represents reference level": [
+                "Representa el nivel de referencia"
+            ],
+            "Residual plots": [
+                "Gráficos de residuos"
+            ],
+            "Residuals": [
+                "Residuos"
+            ],
+            "Residuals Plots": [
+                "Gráficos de Residuos"
+            ],
+            "RMSE": [
+                "RMSE"
+            ],
+            "Save": [
+                "Guardar"
+            ],
+            "Scatterplot matrix": [
+                "Matriz de dispersión"
+            ],
+            "Scatterplot Matrix": [
+                "Matriz de Dispersión"
+            ],
+            "Scatterplot Options": [
+                "Opciones de Diagrama de Dispersión"
+            ],
+            "SD": [
+                "DT"
+            ],
+            "SE": [
+                "EE"
+            ],
+            "Separate fitted line per group": [
+                "Línea ajustada separada por grupo"
+            ],
+            "Shape": [
+                "Forma"
+            ],
+            "Shapiro-Wilk": [
+                "Shapiro-Wilk"
+            ],
+            "Show points": [
+                "Mostrar puntos"
+            ],
+            "show r, p and the fitted line's equation on each descriptive scatterplot.": [
+                "muestra r, p y la ecuación de la línea ajustada en cada diagrama de dispersión descriptivo."
+            ],
+            "Stand. Estimate": [
+                "Estimador Estand."
+            ],
+            "Standardized estimate": [
+                "Estimador estandarizado"
+            ],
+            "Standardized Estimate": [
+                "Estimador Estandarizado"
+            ],
+            "Standardized Residuals": [
+                "Residuos Estandarizados"
+            ],
+            "Statistic": [
+                "Estadístico"
+            ],
+            "Sum of Squares": [
+                "Suma de Cuadrados"
+            ],
+            "Term {0}": [
+                "Término {0}"
+            ],
+            "Term 1": [
+                "Término 1"
+            ],
+            "The specified reference level was not found for the following variable(s): {vars}. Defaulting to the first available level. To use a custom reference level, ensure the defined reference level is available in the data.": [
+                "El nivel (categoria) de referencia no se ha encontrado para la(s) siguiente(s) variable(s): {vars}. Se pasa por defecto a considerar el primer nivel disponible. Para usar un nivel de referencia específico, asegurar que el nivel de referencia definido está disponible en los datos."
+            ],
+            "Theoretical Quantiles": [
+                "Cuantiles teóricos"
+            ],
+            "There were no Mahalanobis distances with a threshold below p < {p}.": [
+                "No hay distancias de Mahalanobis con un umbral por debajo de p < {p}."
+            ],
+            "Tolerance": [
+                "Tolerancia"
+            ],
+            "Type 3 sum of squares": [
+                "Suma de cuadrados tipo 3"
+            ],
+            "Upper": [
+                "Superior"
+            ],
+            "Variable": [
+                "Variable"
+            ],
+            "VIF": [
+                "VIF"
+            ],
+            "Violin plot": [
+                "Diagrama de violín"
+            ],
+            "Weighted by '{varName}'": [
+                "Ponderado por '{varName}'"
+            ],
+            "Weights (optional)": [
+                "Pesos (opcional)"
+            ],
+            "with 'Colour by' set, fit and draw one line (and band) per group instead of one overall line.": [
+                "con 'Colorear por' establecido, ajusta y dibuja una línea (y banda) por grupo en vez de una única línea global."
+            ],
+            "ΔR²": [
+                "ΔR²"
+            ]
+        }
+    }
+}

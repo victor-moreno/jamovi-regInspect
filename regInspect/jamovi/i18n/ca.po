@@ -1,0 +1,743 @@
+#
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-09-02 00:00:00+0000\n"
+"PO-Revision-Date: 2026-09-02 00:00:00+0000\n"
+"Last-Translator: Victor Moreno <v.moreno@iconcologia.net>\n"
+"Language-Team: Catalan\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: R/reginspect.b.R
+msgid "'{var}' contains negative values. Negative weights are not permitted."
+msgstr "'{var}' conté valors negatius. No son permeses ponderacions negatives."
+
+#: R/reginspect.b.R
+msgid "{ciWidth}% Confidence Interval"
+msgstr "Interval de Confiança al {ciWidth}%"
+
+#: R/utilsreg.R
+msgid "{item1} and {item2}"
+msgstr "{item1} i {item2}"
+
+#: R/utilsreg.R
+msgid "{list}, {nextItem}"
+msgstr "{list}, {nextItem}"
+
+#: R/utilsreg.R
+msgid "{list}, and {lastItem}"
+msgstr "{list}, i {lastItem}"
+
+#: R/reginspect.b.R
+msgid "{varType} of linear regression model{modelNo}"
+msgstr "{varType} del model de regressió lineal{modelNo}"
+
+#: regInspect/ui[5][0][0][1]/ci/ciWidth.suffix
+#: regInspect/ui[5][0][1][0]/ciStdEst/ciWidthStdEst.suffix
+#: regInspect/ui[6][1][0][0]/ciEmm/ciWidthEmm.suffix
+msgid "%"
+msgstr "%"
+
+#: regInspect/results/models.template/coef.title
+msgid "`Model Coefficients - ${ dep }`"
+msgstr "`Coeficients del model - ${ dep }`"
+
+#: R/reginspect.b.R
+msgid "⁻ mean - 1SD, <sup>μ</sup> mean, ⁺ mean + 1SD"
+msgstr "⁻ mitjana - 1DE, <sup>μ</sup> mitjana, ⁺ mitjana + 1DE"
+
+#: regInspect/options/boxDep.description.ui
+msgid "a box/violin plot of the dependent variable by each factor."
+msgstr "un diagrama de caixa/violí de la variable dependent per a cada factor."
+
+#: package/analyses/regInspect.description
+#: regInspect/options.description.main
+msgid "A clone of jmv's Linear Regression, exploring the relationship between a continuous dependent variable and one or more continuous and/or categorical explanatory variables, with scatter plots added throughout: observed data (partial residuals by default, or raw values) and prediction intervals on the Estimated Marginal Means plots, and a separate Plots tab with descriptive scatter/box plots of the analysed variables."
+msgstr "Un clon de la Regressió Lineal de jmv que explora la relació entre una variable dependent contínua i una o més variables explicatives contínues i/o categòriques, amb gràfics de dispersió afegits a tot l'anàlisi: dades observades (residus parcials per defecte, o valors bruts) i intervals de predicció en els gràfics de Mitjanes Marginals Estimades, i una pestanya de Gràfics independent amb diagrames de dispersió/caixa descriptius de les variables analitzades."
+
+#: package.description
+msgid "A clone of jmv's Linear Regression, with scatter plots added throughout: observed data (partial residuals or raw values) and prediction intervals on the Estimated Marginal Means plots, and a separate Plots tab with descriptive scatter/box plots of the analysed variables."
+msgstr "Un clon de la Regressió Lineal de jmv, amb gràfics de dispersió afegits a tot l'anàlisi: dades observades (residus parcials o valors bruts) i intervals de predicció en els gràfics de Mitjanes Marginals Estimades, i una pestanya de Gràfics independent amb diagrames de dispersió/caixa descriptius de les variables analitzades."
+
+#: regInspect/options/scatMatrix.description.ui
+msgid "a matrix of small scatterplots for the dependent variable and every covariate."
+msgstr "una matriu de diagrames de dispersió petits per a la variable dependent i cada covariant."
+
+#: regInspect/options/piEmm.description.ui
+msgid "a prediction interval band/bars alongside the confidence interval, describing where a new observation at the plotted reference point would be expected to fall."
+msgstr "una banda o barres d'interval de predicció al costat de l'interval de confiança, que descriu on s'esperaria que caigués una nova observació en el punt de referència representat."
+
+#: regInspect/results/models.template/emm.template/emmTable.description
+msgid "a table containing estimated marginal means"
+msgstr "una taula que conté les mitjanes marginals estimades"
+
+#: regInspect/results/models.template/anova.description
+msgid "a table of ANOVA results"
+msgstr "una taula de resultats ANOVA"
+
+#: regInspect/results/models.template/coef.description
+msgid "a table of model coefficients"
+msgstr "una taula de coeficients del model"
+
+#: regInspect/results/models.template/assump/norm.description
+msgid "a table of normality tests"
+msgstr "una taula de proves de normalitat"
+
+#: regInspect/ui[1]/modelSupplier[0]/blocks.addButton
+msgid "Add New Block"
+msgstr "Afegir Bloc Nou"
+
+#: regInspect/ui[6][0]/emMeansSupplier[0]/emMeans.addButton
+msgid "Add New Term"
+msgstr "Afegir Terme Nou"
+
+#: regInspect/options/r2Adj.title
+#: regInspect/results/modelFit.columns.title
+msgid "Adjusted R²"
+msgstr "R² ajustada"
+
+#: regInspect/options/aic.title
+#: regInspect/results/modelFit.columns.title
+msgid "AIC"
+msgstr "AIC"
+
+#: regInspect/options/scatDep.description.ui
+msgid "an annotated scatterplot (fitted line, r, p, equation) of the dependent variable against each covariate."
+msgstr "un diagrama de dispersió anotat (línia ajustada, r, p, equació) de la variable dependent enfront de cada covariant."
+
+#: regInspect/results/models.description
+msgid "an array of model specific results"
+msgstr "una matriu de resultats específics del model"
+
+#: regInspect/results/models.template/emm.description
+msgid "an array of the estimated marginal means plots + tables"
+msgstr "una matriu de gràfics i taules de mitjanes marginals estimades"
+
+#: regInspect/options/descAnnot.title
+msgid "Annotation"
+msgstr "Anotació"
+
+#: regInspect/options/anova.title
+msgid "ANOVA test"
+msgstr "Prova ANOVA"
+
+#: regInspect/ui[3].label
+#: regInspect/ui[3][0][0][0].label
+#: regInspect/results/models.template/assump.title
+msgid "Assumption Checks"
+msgstr "Comprovació de Supposits"
+
+#: regInspect/results/models.template/assump/durbin.columns.title
+msgid "Autocorrelation"
+msgstr "Autocorrelació"
+
+#: regInspect/options/durbin.title
+msgid "Autocorrelation test"
+msgstr "Prova d'autocorrelació"
+
+#: regInspect/options/bic.title
+#: regInspect/results/modelFit.columns.title
+msgid "BIC"
+msgstr "BIC"
+
+#: jamovi/js/reginspect.events.js:4
+#: jamovi/js/reginspect.events.js:40
+msgid "Block {0}"
+msgstr "Bloc {0}"
+
+#: regInspect/ui[1]/modelSupplier[0]/blocks.template/blockName.label
+msgid "Block 1"
+msgstr "Bloc 1"
+
+#: regInspect/options/blocks.title
+msgid "Blocks"
+msgstr "Blocs"
+
+#: regInspect/options/boxType/box.title
+msgid "Box plot"
+msgstr "Diagrama de caixa"
+
+#: regInspect/options/collin.title
+msgid "Collinearity statistics"
+msgstr "Estadístiques de col·linearitat"
+
+#: regInspect/results/models.template/assump/collin.title
+msgid "Collinearity Statistics"
+msgstr "Estadístiques de Col·linearitat"
+
+#: regInspect/options/groupVar.title
+#: regInspect/ui[7][0][0].label
+msgid "Colour by"
+msgstr "Acolorir per"
+
+#: regInspect/options/groupVar.description.ui
+msgid "colours points by this factor in the descriptive scatterplots and the scatterplot matrix."
+msgstr "acoloreix els punts segons aquest factor en els diagrames de dispersió descriptius i en la matriu de dispersió."
+
+#: regInspect/results/modelComp.columns.superTitle
+msgid "Comparison"
+msgstr "Comparació"
+
+#: regInspect/options/descCIBand.title
+msgid "Confidence band"
+msgstr "Banda de confiança"
+
+#: regInspect/options/ci.title
+#: regInspect/options/ciStdEst.title
+#: regInspect/options/ciEmm.title
+msgid "Confidence interval"
+msgstr "Interval de confiança"
+
+#: regInspect/options/ciWidth.title
+#: regInspect/options/ciWidthStdEst.title
+#: regInspect/options/ciWidthEmm.title
+msgid "Confidence level"
+msgstr "Nivell de Confiança"
+
+#: R/reginspect.b.R
+#: regInspect/options/cooks.title
+#: regInspect/options/cooksOV.title
+msgid "Cook's distance"
+msgstr "Distància de Cook"
+
+#: regInspect/results/models.template/dataSummary/cooks.title
+#: regInspect/results/cooksOV.title
+msgid "Cook's Distance"
+msgstr "Distància de Cook"
+
+#: regInspect/options/covs.title
+#: regInspect/ui[0][1].label
+msgid "Covariates"
+msgstr "Covariant"
+
+#: regInspect/ui[3][0][1][0].label
+#: regInspect/results/models.template/dataSummary.title
+msgid "Data Summary"
+msgstr "Resum de Dades"
+
+#: regInspect/ui[7][1][1][0].label
+msgid "Dependent by Factor"
+msgstr "Dependent per Factor"
+
+#: regInspect/options/boxDep.title
+msgid "Dependent by factors"
+msgstr "Dependent per factors"
+
+#: regInspect/results/plots/box.title
+msgid "Dependent by Factors"
+msgstr "Dependent per Factors"
+
+#: regInspect/options/dep.title
+msgid "Dependent Variable"
+msgstr "Variable Dependent"
+
+#: regInspect/options/scatDep.title
+msgid "Dependent vs. covariates"
+msgstr "Dependent enfront de covariants"
+
+#: regInspect/results/plots/scatter.title
+msgid "Dependent vs. Covariates"
+msgstr "Dependent enfront de Covariants"
+
+#: regInspect/ui[7][1][0][0].label
+msgid "Descriptive Scatterplots"
+msgstr "Diagrames de Dispersió Descriptius"
+
+#: regInspect/results/models.template/anova.columns.title
+msgid "df"
+msgstr "gl"
+
+#: regInspect/results/modelFit.columns.title
+#: regInspect/results/modelComp.columns.title
+msgid "df1"
+msgstr "gl1"
+
+#: regInspect/results/modelFit.columns.title
+#: regInspect/results/modelComp.columns.title
+msgid "df2"
+msgstr "gl2"
+
+#: regInspect/ui[1]/modelSupplier[0]/blocks.template/blockList.ghostText
+#: regInspect/ui[6][0]/emMeansSupplier[0]/emMeans.template/blockList.ghostText
+msgid "drag variables here"
+msgstr "arrossegueu les variables aquí"
+
+#: regInspect/options/emmPoints.description.ui
+msgid "draw the analysed observations on the marginal means plot. 'Partial residuals' (default) adds back each observation's residual to the plotted term's own fitted contribution, so the cloud stays correct on the plot's adjusted scale -- with a single predictor this is identical to the raw dependent variable. 'Raw values' plots the dependent variable itself, which is only on the same scale as the plot when the model has no other predictors. Suppressed on an axis that bins a covariate to -1SD/Mean/+1SD, where no observation has a real position."
+msgstr "representa les observacions analitzades en el gràfic de mitjanes marginals. 'Residus parcials' (per defecte) afegeix a la contribució ajustada pròpia del terme representat el residu de cada observació, de manera que el núvol de punts es manté correcte a l'escala ajustada del gràfic -- amb un únic predictor, això és idèntic a la variable dependent bruta. 'Valors bruts' representa la mateixa variable dependent, que només és a la mateixa escala que el gràfic quan el model no té altres predictors. Se suprimeix en un eix que agrupa una covariant en -1DE/Mitjana/+1DE, on cap observació no té una posició real."
+
+#: regInspect/results/models.template/assump/durbin.title
+msgid "Durbin–Watson Test for Autocorrelation"
+msgstr "Prova Durbin-Watson d'Autocorrelació"
+
+#: regInspect/results/models.template/assump/durbin.columns.title
+msgid "DW Statistic"
+msgstr "Estadístic DW"
+
+#: regInspect/options/emmWeights.title
+msgid "Equal cell weights"
+msgstr "Ponderació igual de cel·les"
+
+#: regInspect/ui[5][0][0][1].label
+#: regInspect/results/models.template/coef.columns.title
+msgid "Estimate"
+msgstr "Estimador"
+
+#: regInspect/ui[6].label
+#: regInspect/results/models.template/emm.title
+msgid "Estimated Marginal Means"
+msgstr "Mitjanes Marginals Estimades"
+
+#: R/reginspect.b.R
+msgid "Estimated Marginal Means - {term}"
+msgstr "Mitjanes Marginals Estimades - {term}"
+
+#: regInspect/options/modelTest.title
+msgid "F test"
+msgstr "Prova F"
+
+#: R/reginspect.b.R
+msgid "Factor '{factor}' needs to have at least 2 levels"
+msgstr "El factor ‘{factor}’ requereix com a mínim 2 nivells"
+
+#: regInspect/options/factors.title
+#: regInspect/ui[0][2].label
+msgid "Factors"
+msgstr "Factors"
+
+#: regInspect/ui[4][0][0][0].label
+msgid "Fit Measures"
+msgstr "Mesures d'ajustament"
+
+#: R/reginspect.b.R
+msgid "Fitted"
+msgstr "Ajustats"
+
+#: regInspect/options/descLine.title
+msgid "Fitted line"
+msgstr "Línia ajustada"
+
+#: regInspect/ui[6][1][0][0].label
+msgid "General Options"
+msgstr "Opcions Generals"
+
+#: regInspect/ui[2][1]/intercept_grandMean.label
+msgid "Grand mean (simple coding)"
+msgstr "Mitjana general (codificació simple)"
+
+#: R/reginspect.b.R
+#: regInspect/options/intercept.title
+#: regInspect/ui[2][1].label
+msgid "Intercept"
+msgstr "Constant"
+
+#: regInspect/ui[5][0][0][1]/ci/ciWidth.label
+#: regInspect/ui[5][0][1][0]/ciStdEst/ciWidthStdEst.label
+#: regInspect/ui[6][1][0][0]/ciEmm/ciWidthEmm.label
+msgid "Interval"
+msgstr "Interval"
+
+#: package/analyses/regInspect.menuSubtitle
+#: regInspect/options.menuSubtitle
+msgid "Linear regression with observed-data & descriptive plots"
+msgstr "Regressió lineal amb dades observades i gràfics descriptius"
+
+#: R/reginspect.b.R
+#: regInspect/results/models.template/coef.columns.title
+msgid "Lower"
+msgstr "Inferior"
+
+#: R/reginspect.b.R
+msgid "Mahalanobis ChiSq"
+msgstr "Khi-Quad. de Mahalanobis"
+
+#: regInspect/options/mahal.title
+#: regInspect/options/mahalOV.title
+msgid "Mahalanobis distance"
+msgstr "Distància de Mahalanobis"
+
+#: regInspect/results/models.template/dataSummary/mahal.title
+#: regInspect/results/mahalOV.title
+msgid "Mahalanobis Distance"
+msgstr "Distància de Mahalanobis"
+
+#: R/reginspect.b.R
+msgid "Mahalanobis distance (Chi sq.)"
+msgstr "Distància Mahalanobis (Chi sq.)"
+
+#: R/reginspect.b.R
+msgid "Mahalanobis distance (p)"
+msgstr "Distància de Mahalanobis (p)"
+
+#: R/reginspect.b.R
+msgid "Mahalanobis distance can only be calculated for models with two or more covariates"
+msgstr "La distància de Mahalanobis només es pot calcular per a models amb dues o més covariables"
+
+#: R/reginspect.b.R
+msgid "Mahalanobis p"
+msgstr "Mahalanobis p"
+
+#: R/reginspect.b.R
+msgid "Marginal Mean"
+msgstr "Mitjana Marginal"
+
+#: regInspect/options/emMeans.title
+msgid "Marginal Means"
+msgstr "Mitjanes Marginals"
+
+#: regInspect/options/emmPlots.title
+msgid "Marginal means plots"
+msgstr "Gràfics de mitjanes marginals"
+
+#: regInspect/options/emmTables.title
+msgid "Marginal means tables"
+msgstr "Taules de mitjanes marginals"
+
+#: regInspect/results/models.template/dataSummary/cooks.columns.title
+#: regInspect/results/models.template/dataSummary/mahal.columns.title
+msgid "Max"
+msgstr "Màx"
+
+#: regInspect/results/models.template/dataSummary/cooks.columns.title
+#: regInspect/results/models.template/dataSummary/mahal.columns.title
+msgid "Mean"
+msgstr "Mitjana"
+
+#: regInspect/results/models.template/anova.columns.title
+msgid "Mean Square"
+msgstr "Mitjana Quadràtica"
+
+#: regInspect/results/models.template/dataSummary/cooks.columns.title
+#: regInspect/results/models.template/dataSummary/mahal.columns.title
+msgid "Median"
+msgstr "Mediana"
+
+#: regInspect/results/models.template/dataSummary/cooks.columns.title
+#: regInspect/results/models.template/dataSummary/mahal.columns.title
+msgid "Min"
+msgstr "Mín"
+
+#: regInspect/results/modelFit.columns.title
+#: regInspect/results/modelComp.columns.title
+msgid "Model"
+msgstr "Model"
+
+#: regInspect/ui[1].label
+msgid "Model Builder"
+msgstr "Constructor del model"
+
+#: regInspect/ui[5].label
+msgid "Model Coefficients"
+msgstr "Coeficients del model"
+
+#: regInspect/results/modelComp.title
+msgid "Model Comparisons"
+msgstr "Comparació de models"
+
+#: regInspect/ui[4].label
+msgid "Model Fit"
+msgstr "Ajustament del Model"
+
+#: regInspect/results/modelFit.title
+msgid "Model Fit Measures"
+msgstr "Mesures de Ajustament del Model"
+
+#: regInspect/results/models.title
+msgid "Model Specific Results"
+msgstr "Resultats Específics del Model"
+
+#: R/reginspect.b.R
+msgid "Models estimated using sample size of N={n}"
+msgstr "Models estimats utilitzant una mida de mostra de N={n}"
+
+#: regInspect/options/emmPoints/none.title
+msgid "None"
+msgstr "Cap"
+
+#: regInspect/options/norm.title
+msgid "Normality test"
+msgstr "Prova de normalitat"
+
+#: regInspect/results/models.template/assump/norm.title
+msgid "Normality Test (Shapiro-Wilk)"
+msgstr "Prova de Normalitat (Shapiro-Wilk)"
+
+#: regInspect/options/emmPoints.title
+msgid "Observed data"
+msgstr "Dades observades"
+
+#: R/reginspect.b.R
+msgid "Observed data not shown: '{var}' is a covariate here, binned to -1SD/Mean/+1SD -- no observation has a real position on it."
+msgstr "Dades observades no mostrades: '{var}' és una covariant aquí, agrupada en -1DE/Mitjana/+1DE -- cap observació no té una posició real en ella."
+
+#: regInspect/results/models.template/anova.title
+msgid "Omnibus ANOVA Test"
+msgstr "Prova ANOVA Òmnibus"
+
+#: regInspect/ui[5][0][0][0].label
+msgid "Omnibus Test"
+msgstr "Prova Òmnibus"
+
+#: regInspect/ui[6][1][1][0].label
+msgid "Output"
+msgstr "Resultat"
+
+#: regInspect/ui[4][0][1][0].label
+#: regInspect/results/modelFit.columns.superTitle
+msgid "Overall Model Test"
+msgstr "Prova pel Model general"
+
+#: regInspect/ui[3][0][1][0]/mahal/mahalp.label
+msgid "p <"
+msgstr "p <"
+
+#: regInspect/options/emmPoints/partial.title
+msgid "Partial residuals"
+msgstr "Residus parcials"
+
+#: regInspect/results/models.template/dataSummary/mahal.columns.title
+msgid "Participants (rows) below p-threshold"
+msgstr "Participants (files) per sota del llindar p"
+
+#: regInspect/ui[7].label
+#: regInspect/results/plots.title
+msgid "Plots"
+msgstr "Gràfics"
+
+#: R/reginspect.b.R
+#: regInspect/options/predictOV.title
+#: regInspect/results/predictOV.title
+msgid "Predicted values"
+msgstr "Valors predits"
+
+#: regInspect/options/descPIBand.title
+msgid "Prediction band"
+msgstr "Banda de predicció"
+
+#: regInspect/options/piEmm.title
+msgid "Prediction interval"
+msgstr "Interval de predicció"
+
+#: R/reginspect.b.R
+msgid "Prediction interval for a new observation at this reference point ({vars} held at their mean, or averaged across levels)."
+msgstr "Interval de predicció per a una nova observació en aquest punt de referència ({vars} fixades en la seva mitjana, o mitjanades entre nivells)."
+
+#: regInspect/results/models.template/coef.columns.title
+msgid "Predictor"
+msgstr "Predictor"
+
+#: regInspect/ui[1]/modelSupplier.label
+msgid "Predictors"
+msgstr "Predictors"
+
+#: regInspect/results/models.template/assump/qqPlot.title
+msgid "Q-Q Plot"
+msgstr "Gràfica Q-Q"
+
+#: regInspect/options/qqPlot.title
+msgid "Q-Q plot of residuals"
+msgstr "Gràfica Q-Q dels residus"
+
+#: regInspect/options/r2.title
+#: regInspect/results/modelFit.columns.title
+msgid "R²"
+msgstr "R²"
+
+#: regInspect/results/models.template/dataSummary/cooks.columns.superTitle
+#: regInspect/results/models.template/dataSummary/mahal.columns.superTitle
+msgid "Range"
+msgstr "Recorregut"
+
+#: regInspect/options/emmPoints/raw.title
+msgid "Raw values"
+msgstr "Valors bruts"
+
+#: regInspect/ui[2]/refLevels.columns.label
+msgid "Reference Level"
+msgstr "Nivell de referència"
+
+#: regInspect/ui[2][1]/intercept_refLevel.label
+msgid "Reference level (dummy coding)"
+msgstr "Nivell de referència (codificació dummy)"
+
+#: regInspect/options/refLevels.title
+#: regInspect/ui[2].label
+msgid "Reference Levels"
+msgstr "Nivells de referència"
+
+#: package/analyses/regInspect.menuGroup
+#: regInspect/options.menuGroup
+msgid "Regression"
+msgstr "Regressió"
+
+#: package.title
+#: package/analyses/regInspect.title
+#: package/analyses/regInspect.menuTitle
+#: regInspect/options.title
+#: regInspect/options.menuTitle
+#: regInspect/ui.title
+#: regInspect/results.title
+msgid "Regression Inspector"
+msgstr "Inspector de Regressió"
+
+#: R/reginspect.b.R
+msgid "Represents grand mean"
+msgstr "Representa la mitjana general"
+
+#: R/reginspect.b.R
+msgid "Represents reference level"
+msgstr "Representa el nivell de referència"
+
+#: regInspect/options/resPlots.title
+msgid "Residual plots"
+msgstr "Gràfics de residus"
+
+#: R/reginspect.b.R
+#: regInspect/options/residsOV.title
+#: regInspect/results/residsOV.title
+msgid "Residuals"
+msgstr "Residus"
+
+#: regInspect/results/models.template/assump/resPlots.title
+msgid "Residuals Plots"
+msgstr "Gràfics de Residus"
+
+#: regInspect/options/rmse.title
+#: regInspect/results/modelFit.columns.title
+msgid "RMSE"
+msgstr "RMSE"
+
+#: regInspect/ui[8].label
+msgid "Save"
+msgstr "Desa"
+
+#: regInspect/options/scatMatrix.title
+msgid "Scatterplot matrix"
+msgstr "Matriu de dispersió"
+
+#: regInspect/results/plots/matrix.title
+msgid "Scatterplot Matrix"
+msgstr "Matriu de Dispersió"
+
+#: regInspect/ui[7][2][0].label
+msgid "Scatterplot Options"
+msgstr "Opcions del Diagrama de Dispersió"
+
+#: regInspect/results/models.template/dataSummary/cooks.columns.title
+#: regInspect/results/models.template/dataSummary/mahal.columns.title
+msgid "SD"
+msgstr "DE"
+
+#: R/reginspect.b.R
+#: regInspect/results/models.template/coef.columns.title
+msgid "SE"
+msgstr "EE"
+
+#: regInspect/options/groupLines.title
+msgid "Separate fitted line per group"
+msgstr "Línia ajustada separada per grup"
+
+#: regInspect/options/boxType.title
+msgid "Shape"
+msgstr "Forma"
+
+#: regInspect/results/models.template/assump/norm.columns.content
+msgid "Shapiro-Wilk"
+msgstr "Shapiro-Wilk"
+
+#: regInspect/options/boxPoints.title
+msgid "Show points"
+msgstr "Mostra els punts"
+
+#: regInspect/options/descAnnot.description.ui
+msgid "show r, p and the fitted line's equation on each descriptive scatterplot."
+msgstr "mostra r, p i l'equació de la línia ajustada a cada diagrama de dispersió descriptiu."
+
+#: regInspect/results/models.template/coef.columns.title
+msgid "Stand. Estimate"
+msgstr "Estimador Estand."
+
+#: regInspect/options/stdEst.title
+msgid "Standardized estimate"
+msgstr "Estimador estandarditzat"
+
+#: regInspect/ui[5][0][1][0].label
+msgid "Standardized Estimate"
+msgstr "Estimador Estandarditzat"
+
+#: R/reginspect.b.R
+msgid "Standardized Residuals"
+msgstr "Residus Estandarditzats"
+
+#: regInspect/results/models.template/assump/norm.columns.title
+msgid "Statistic"
+msgstr "Estadístic"
+
+#: regInspect/results/models.template/anova.columns.title
+msgid "Sum of Squares"
+msgstr "Suma de Quadrats"
+
+#: jamovi/js/reginspect.events.js:10
+#: jamovi/js/reginspect.events.js:47
+msgid "Term {0}"
+msgstr "Terme {0}"
+
+#: regInspect/ui[6][0]/emMeansSupplier[0]/emMeans.template/blockName.label
+msgid "Term 1"
+msgstr "Terme 1"
+
+#: R/utilsreg.R
+msgid "The specified reference level was not found for the following variable(s): {vars}. Defaulting to the first available level. To use a custom reference level, ensure the defined reference level is available in the data."
+msgstr "No s'ha trobat el nivell de referència especificat per a les variables següents: {vars}. S'utilitza per defecte el primer nivell disponible. Per utilitzar un nivell de referència personalitzat, assegureu-vos que el nivell de referència definit estigui disponible a les dades."
+
+#: R/reginspect.b.R
+msgid "Theoretical Quantiles"
+msgstr "Quantils Teòrics"
+
+#: R/reginspect.b.R
+msgid "There were no Mahalanobis distances with a threshold below p < {p}."
+msgstr "No hi havia distàncies de Mahalanobis amb un llindar per sota de p < {p}."
+
+#: regInspect/results/models.template/assump/collin.columns.title
+msgid "Tolerance"
+msgstr "Tolerància"
+
+#: R/reginspect.b.R
+msgid "Type 3 sum of squares"
+msgstr "Suma de quadrats Tipus 3"
+
+#: R/reginspect.b.R
+#: regInspect/results/models.template/coef.columns.title
+msgid "Upper"
+msgstr "Superior"
+
+#: regInspect/ui[2]/refLevels.columns.label
+msgid "Variable"
+msgstr "Variable"
+
+#: regInspect/results/models.template/assump/collin.columns.title
+msgid "VIF"
+msgstr "VIF"
+
+#: regInspect/options/boxType/violin.title
+msgid "Violin plot"
+msgstr "Diagrama de violí"
+
+#: R/reginspect.b.R
+msgid "Weighted by '{varName}'"
+msgstr "Ponderat per '{varName}'"
+
+#: regInspect/options/weights.title
+msgid "Weights (optional)"
+msgstr "Ponderacions (opcional)"
+
+#: regInspect/options/groupLines.description.ui
+msgid "with 'Colour by' set, fit and draw one line (and band) per group instead of one overall line."
+msgstr "amb 'Acolorir per' establert, ajusta i dibuixa una línia (i banda) per grup en lloc d'una única línia global."
+
+#: regInspect/results/modelComp.columns.title
+msgid "ΔR²"
+msgstr "ΔR²"

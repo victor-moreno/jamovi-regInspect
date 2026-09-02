@@ -27,7 +27,7 @@ description:
                    blocks = list(list('education', 'prestige', 'women')))
 
             #
-            #  LINEAR REGRESSION
+            #  REGRESSION INSPECTOR
             #
             #  Model Fit Measures
             #  ───────────────────────────
