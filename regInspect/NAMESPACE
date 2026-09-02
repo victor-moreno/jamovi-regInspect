@@ -1,0 +1,26 @@
+# Generated/maintained alongside jmvtools::prepare() -- see build-install-ship.md
+# in the jamovi-skill: jamovi itself reaches analyses via
+# namespace[[paste0(name,"Class")]], bypassing the export list entirely. This
+# export exists only so regInspect::regInspect(...) is callable from a
+# plain R script (headless testing, tools/install.sh's Docker smoke test).
+#
+# The backend R code was cloned from jmv::linReg, which relies on bare
+# (unqualified) calls into jmvcore and ggplot2 -- e.g. Cell.BEGIN_GROUP,
+# geom_point(), aes() -- rather than always using `::`. This NAMESPACE
+# mirrors jmv's own (import(jmvcore), import(ggplot2), plus the specific
+# stats/utils/magrittr symbols it pulls in bare) so that inherited code keeps
+# resolving the same names the same way.
+export(regInspect)
+import(ggplot2)
+import(jmvcore)
+importFrom(jmvcore,.)
+importFrom(jmvcore,matchSet)
+importFrom(stats,aggregate.data.frame)
+importFrom(stats,complete.cases)
+importFrom(stats,contr.helmert)
+importFrom(stats,contr.treatment)
+importFrom(stats,integrate)
+importFrom(stats,p.adjust.methods)
+importFrom(stats,pnorm)
+importFrom(stats,pt)
+importFrom(utils,combn)

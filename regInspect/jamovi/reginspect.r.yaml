@@ -1,0 +1,502 @@
+---
+name:  regInspect
+title: Linear Regression
+jrs: '1.1'
+
+items:
+    - name: modelFit
+      title: Model Fit Measures
+      type: Table
+      clearWith:
+        - dep
+        - blocks
+        - weights
+      visible: (r || r2 || r2Adj || aic || bic || rmse || modelTest)
+
+      columns:
+        - name: model
+          title: "Model"
+          type: text
+
+        - name: r
+          title: R
+          type: number
+          visible: (r)
+
+        - name: r2
+          title: R²
+          type: number
+          visible: (r2)
+
+        - name: r2Adj
+          title: Adjusted R²
+          type: number
+          visible: (r2Adj)
+
+        - name: aic
+          title: AIC
+          type: number
+          visible: (aic)
+
+        - name: bic
+          title: BIC
+          type: number
+          visible: (bic)
+
+        - name: rmse
+          title: RMSE
+          type: number
+          visible: (rmse)
+
+        - name: f
+          title: F
+          type: number
+          superTitle: Overall Model Test
+          visible: (modelTest)
+
+        - name: df1
+          title: df1
+          type: integer
+          superTitle: Overall Model Test
+          visible: (modelTest)
+
+        - name: df2
+          title: df2
+          type: integer
+          superTitle: Overall Model Test
+          visible: (modelTest)
+
+        - name: p
+          title: p
+          type: number
+          format: zto,pvalue
+          superTitle: Overall Model Test
+          visible: (modelTest)
+
+    - name: modelComp
+      title: 'Model Comparisons'
+      type: Table
+      clearWith:
+        - dep
+        - blocks
+        - weights
+
+      columns:
+        - name: model1
+          title: 'Model'
+          content: .
+          type: text
+          superTitle: Comparison
+
+        - name: sep
+          title: ""
+          content: "-"
+          type: text
+          format: narrow
+          superTitle: Comparison
+
+        - name: model2
+          title: 'Model'
+          content: .
+          type: text
+          superTitle: Comparison
+
+        - name: r2
+          title: ΔR²
+          type: number
+
+        - name: f
+          title: F
+          type: number
+
+        - name: df1
+          title: df1
+          type: integer
+
+        - name: df2
+          title: df2
+          type: integer
+
+        - name: p
+          title: p
+          type: number
+          format: zto,pvalue
+
+    - name: models
+      title: Model Specific Results
+      type: Array
+      layout: listSelect
+      hideHeadingOnlyChild: true
+      description: an array of model specific results
+      clearWith:
+        - blocks
+      template:
+
+        title: ''
+        type: Group
+        items:
+
+            - name: anova
+              title: Omnibus ANOVA Test
+              type: Table
+              description: a table of ANOVA results
+              visible: (anova)
+              refs: car
+              clearWith:
+                - dep
+                - blocks
+                - weights
+              columns:
+                - name: term
+                  title: ""
+                  type: text
+
+                - name: ss
+                  title: Sum of Squares
+                  type: number
+
+                - name: df
+                  title: df
+                  type: integer
+
+                - name: ms
+                  title: Mean Square
+                  type: number
+
+                - name: F
+                  title: F
+                  type: number
+
+                - name: p
+                  title: p
+                  type: number
+                  format: zto,pvalue
+
+            - name: coef
+              title: '`Model Coefficients - ${ dep }`'
+              type: Table
+              description: a table of model coefficients
+              clearWith:
+                - dep
+                - blocks
+                - refLevels
+                - ciWidth
+                - ciWidthStdEst
+                - intercept
+                - weights
+
+              columns:
+                - name: term
+                  title: "Predictor"
+                  type: text
+
+                - name: est
+                  title: Estimate
+                  type: number
+
+                - name: se
+                  title: SE
+                  type: number
+
+                - name: lower
+                  title: Lower
+                  type: number
+                  visible: (ci)
+
+                - name: upper
+                  title: Upper
+                  type: number
+                  visible: (ci)
+
+                - name: t
+                  title: t
+                  type: number
+
+                - name: p
+                  title: p
+                  type: number
+                  format: zto,pvalue
+
+                - name: stdEst
+                  title: Stand. Estimate
+                  type: number
+                  visible: (stdEst)
+
+                - name: stdEstLower
+                  title: Lower
+                  type: number
+                  visible: (ciStdEst && stdEst)
+
+                - name: stdEstUpper
+                  title: Upper
+                  type: number
+                  visible: (ciStdEst && stdEst)
+
+            - name: dataSummary
+              title: Data Summary
+              type: Group
+              items:
+
+                - name: cooks
+                  title: Cook's Distance
+                  type: Table
+                  rows: 1
+                  visible: (cooks)
+                  clearWith:
+                    - dep
+                    - blocks
+                    - weights
+
+                  columns:
+                    - name: mean
+                      title: Mean
+                      type: number
+
+                    - name: median
+                      title: Median
+                      type: number
+
+                    - name: sd
+                      title: SD
+                      type: number
+
+                    - name: min
+                      title: Min
+                      type: number
+                      superTitle: Range
+
+                    - name: max
+                      title: Max
+                      type: number
+                      superTitle: Range
+
+                - name: mahal
+                  title: Mahalanobis Distance
+                  type: Table
+                  rows: 1
+                  visible: (mahal)
+                  clearWith:
+                    - dep
+                    - blocks
+                    - weights
+
+                  columns:
+                    - name: mean
+                      title: Mean
+                      type: number
+
+                    - name: median
+                      title: Median
+                      type: number
+
+                    - name: sd
+                      title: SD
+                      type: number
+
+                    - name: min
+                      title: Min
+                      type: number
+                      superTitle: Range
+
+                    - name: max
+                      title: Max
+                      type: number
+                      superTitle: Range
+
+                    - name: excRow
+                      title: Participants (rows) below p-threshold
+                      type: text
+
+            - name: assump
+              title: Assumption Checks
+              type: Group
+              items:
+                - name: durbin
+                  title: Durbin–Watson Test for Autocorrelation
+                  type: Table
+                  rows: 1
+                  visible: (durbin)
+                  refs: car
+                  clearWith:
+                    - dep
+                    - blocks
+                    - weights
+
+                  columns:
+                    - name: autoCor
+                      title: Autocorrelation
+                      type: number
+
+                    - name: dw
+                      title: DW Statistic
+                      type: number
+
+                    - name: p
+                      title: p
+                      type: number
+                      format: zto,pvalue
+
+                - name: collin
+                  title: Collinearity Statistics
+                  type: Table
+                  visible: (collin)
+                  refs: car
+                  clearWith:
+                    - dep
+                    - blocks
+                    - weights
+
+                  columns:
+                    - name: term
+                      title: ''
+                      type: text
+
+                    - name: vif
+                      title: VIF
+                      type: number
+
+                    - name: tol
+                      title: Tolerance
+                      type: number
+
+                - name: norm
+                  title: Normality Test (Shapiro-Wilk)
+                  type: Table
+                  description: a table of normality tests
+                  visible: (norm)
+                  rows: 1
+                  clearWith:
+                    - dep
+                    - blocks
+                    - weights
+                  columns:
+                    - name: t[sw]
+                      title: ''
+                      type: text
+                      content: Shapiro-Wilk
+                      visible: false
+
+                    - name: s[sw]
+                      title: Statistic
+
+                    - name: p[sw]
+                      title: p
+                      format: zto,pvalue
+
+                - name: qqPlot
+                  title: Q-Q Plot
+                  type: Image
+                  width: 450
+                  height: 400
+                  renderFun: .qqPlot
+                  visible: (qqPlot)
+                  requiresData: true
+                  clearWith:
+                    - dep
+                    - blocks
+                    - weights
+
+                - name: resPlots
+                  title: Residuals Plots
+                  type: Array
+                  visible: (resPlots)
+                  template:
+                      type: Image
+                      renderFun: .resPlot
+                      requiresData: true
+                      clearWith:
+                        - dep
+                        - blocks
+                        - weights
+
+            - name: emm
+              title: Estimated Marginal Means
+              type: Array
+              description: an array of the estimated marginal means plots + tables
+
+              refs: emmeans
+
+              clearWith:
+                - dep
+                - blocks
+                - weights
+                - emMeans
+              template:
+
+                  title: ''
+                  type: Group
+                  items:
+
+                    - name: emmPlot
+                      title: ''
+                      type: Image
+                      width: 450
+                      height: 400
+                      renderFun: .emmPlot
+                      visible: (emmPlots)
+                      clearWith:
+                        - dep
+                        - blocks
+                        - weights
+                        - refLevels
+                        - ciEmm
+                        - ciWidthEmm
+                        - emmWeights
+
+                    - name: emmTable
+                      title: ''
+                      type: Table
+                      description: a table containing estimated marginal means
+                      visible: (emmTables)
+                      columns: []
+                      clearWith:
+                        - dep
+                        - blocks
+                        - weights
+                        - refLevels
+                        - ciWidthEmm
+                        - emmWeights
+
+    - name: predictOV
+      type: Output
+      title: Predicted values
+      varTitle: Predicted values
+      varDescription: Predicted values of linear regression
+      measureType: continuous
+      clearWith:
+        - dep
+        - blocks
+        - weights
+
+    - name: residsOV
+      type: Output
+      title: Residuals
+      varTitle: Residuals
+      varDescription: Residuals of linear regression
+      measureType: continuous
+      clearWith:
+        - dep
+        - blocks
+        - weights
+
+    - name: cooksOV
+      type: Output
+      title: Cook's Distance
+      varTitle: Cook's distance
+      varDescription: Cook's distance of linear regression
+      measureType: continuous
+      clearWith:
+        - dep
+        - blocks
+        - weights
+
+    - name: mahalOV
+      type: Output
+      title: Mahalanobis Distance
+      varTitle: Mahalanobis
+      varDescription: Mahalanobis distance (statistic and p-value) of the independent variables
+      measureType: continuous
+      clearWith:
+        - dep
+        - blocks
+        - weights
