@@ -11,3 +11,5 @@ task_plan.md
 findings.md
 progress.md
 dist/
+regInspect/build/
+regInspect/*.jmo
