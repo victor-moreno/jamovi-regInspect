@@ -1,0 +1,13 @@
+jamovi-src
+.tmp/
+Rplots.pdf
+.claude
+.cache
+.venv
+.envrc
+
+# working notes -- not part of the shipped repo, only README.md is
+task_plan.md
+findings.md
+progress.md
+dist/
