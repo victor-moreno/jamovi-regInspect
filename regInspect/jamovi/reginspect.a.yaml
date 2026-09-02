@@ -436,6 +436,103 @@ options:
             `TRUE` or `FALSE` (default), provide a prediction interval
             for the estimated marginal means plots
 
+    - name: scatDep
+      title: Dependent vs. covariates
+      type: Bool
+      default: false
+      description:
+          ui: an annotated scatterplot (fitted line, r, p, equation) of the dependent variable against each covariate.
+          R: '`TRUE` or `FALSE` (default), provide a scatterplot of the dependent variable against each covariate'
+
+    - name: boxDep
+      title: Dependent by factors
+      type: Bool
+      default: false
+      description:
+          ui: a box/violin plot of the dependent variable by each factor.
+          R: '`TRUE` or `FALSE` (default), provide a box/violin plot of the dependent variable by each factor'
+
+    - name: boxType
+      title: Shape
+      type: List
+      options:
+        - name: box
+          title: Box plot
+        - name: violin
+          title: Violin plot
+      default: box
+      description:
+          R: '`''box''` (default) or `''violin''`, the shape of the dependent-by-factor plots'
+
+    - name: boxPoints
+      title: Show points
+      type: Bool
+      default: true
+      description:
+          R: '`TRUE` (default) or `FALSE`, overlay jittered points on the dependent-by-factor plots'
+
+    - name: scatMatrix
+      title: Scatterplot matrix
+      type: Bool
+      default: false
+      description:
+          ui: a matrix of small scatterplots for the dependent variable and every covariate.
+          R: '`TRUE` or `FALSE` (default), provide a scatterplot matrix of the dependent variable and the covariates'
+
+    - name: groupVar
+      title: Colour by
+      type: Variable
+      suggested:
+        - nominal
+      permitted:
+        - factor
+      default:
+      description:
+          ui: colours points by this factor in the descriptive scatterplots and the scatterplot matrix.
+          R: >
+            a string naming a factor in `data` to colour points by in the
+            descriptive scatterplots and scatterplot matrix, or `NULL`
+            (default) for none
+
+    - name: groupLines
+      title: Separate fitted line per group
+      type: Bool
+      default: false
+      description:
+          ui: with 'Colour by' set, fit and draw one line (and band) per group instead of one overall line.
+          R: >
+            `TRUE` or `FALSE` (default), with `groupVar` set, fit a separate
+            line per group instead of one overall line
+
+    - name: descLine
+      title: Fitted line
+      type: Bool
+      default: true
+      description:
+          R: '`TRUE` (default) or `FALSE`, draw the fitted regression line on the descriptive scatterplots'
+
+    - name: descAnnot
+      title: Annotation
+      type: Bool
+      default: true
+      description:
+          ui: show r, p and the fitted line's equation on each descriptive scatterplot.
+          R: '`TRUE` (default) or `FALSE`, show r, p and the fitted line''s equation on the descriptive scatterplots'
+
+    - name: descCIBand
+      title: Confidence band
+      type: Bool
+      default: false
+      description:
+          R: '`TRUE` or `FALSE` (default), draw a confidence band on the descriptive scatterplots'
+
+    - name: descPIBand
+      title: Prediction band
+      type: Bool
+      default: false
+      description:
+          R: '`TRUE` or `FALSE` (default), draw a prediction band on the descriptive scatterplots'
+
     - name: predictOV
       title: Predicted values
       type: Output

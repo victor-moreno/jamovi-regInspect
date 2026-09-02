@@ -43,7 +43,18 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             emmTables = FALSE,
             emmWeights = TRUE,
             emmPoints = "partial",
-            piEmm = FALSE, ...) {
+            piEmm = FALSE,
+            scatDep = FALSE,
+            boxDep = FALSE,
+            boxType = "box",
+            boxPoints = TRUE,
+            scatMatrix = FALSE,
+            groupVar = NULL,
+            groupLines = FALSE,
+            descLine = TRUE,
+            descAnnot = TRUE,
+            descCIBand = FALSE,
+            descPIBand = FALSE, ...) {
 
             super$initialize(
                 package="regInspect",
@@ -246,6 +257,57 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "piEmm",
                 piEmm,
                 default=FALSE)
+            private$..scatDep <- jmvcore::OptionBool$new(
+                "scatDep",
+                scatDep,
+                default=FALSE)
+            private$..boxDep <- jmvcore::OptionBool$new(
+                "boxDep",
+                boxDep,
+                default=FALSE)
+            private$..boxType <- jmvcore::OptionList$new(
+                "boxType",
+                boxType,
+                options=list(
+                    "box",
+                    "violin"),
+                default="box")
+            private$..boxPoints <- jmvcore::OptionBool$new(
+                "boxPoints",
+                boxPoints,
+                default=TRUE)
+            private$..scatMatrix <- jmvcore::OptionBool$new(
+                "scatMatrix",
+                scatMatrix,
+                default=FALSE)
+            private$..groupVar <- jmvcore::OptionVariable$new(
+                "groupVar",
+                groupVar,
+                suggested=list(
+                    "nominal"),
+                permitted=list(
+                    "factor"),
+                default=NULL)
+            private$..groupLines <- jmvcore::OptionBool$new(
+                "groupLines",
+                groupLines,
+                default=FALSE)
+            private$..descLine <- jmvcore::OptionBool$new(
+                "descLine",
+                descLine,
+                default=TRUE)
+            private$..descAnnot <- jmvcore::OptionBool$new(
+                "descAnnot",
+                descAnnot,
+                default=TRUE)
+            private$..descCIBand <- jmvcore::OptionBool$new(
+                "descCIBand",
+                descCIBand,
+                default=FALSE)
+            private$..descPIBand <- jmvcore::OptionBool$new(
+                "descPIBand",
+                descPIBand,
+                default=FALSE)
             private$..predictOV <- jmvcore::OptionOutput$new(
                 "predictOV")
             private$..residsOV <- jmvcore::OptionOutput$new(
@@ -291,6 +353,17 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..emmWeights)
             self$.addOption(private$..emmPoints)
             self$.addOption(private$..piEmm)
+            self$.addOption(private$..scatDep)
+            self$.addOption(private$..boxDep)
+            self$.addOption(private$..boxType)
+            self$.addOption(private$..boxPoints)
+            self$.addOption(private$..scatMatrix)
+            self$.addOption(private$..groupVar)
+            self$.addOption(private$..groupLines)
+            self$.addOption(private$..descLine)
+            self$.addOption(private$..descAnnot)
+            self$.addOption(private$..descCIBand)
+            self$.addOption(private$..descPIBand)
             self$.addOption(private$..predictOV)
             self$.addOption(private$..residsOV)
             self$.addOption(private$..cooksOV)
@@ -333,6 +406,17 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         emmWeights = function() private$..emmWeights$value,
         emmPoints = function() private$..emmPoints$value,
         piEmm = function() private$..piEmm$value,
+        scatDep = function() private$..scatDep$value,
+        boxDep = function() private$..boxDep$value,
+        boxType = function() private$..boxType$value,
+        boxPoints = function() private$..boxPoints$value,
+        scatMatrix = function() private$..scatMatrix$value,
+        groupVar = function() private$..groupVar$value,
+        groupLines = function() private$..groupLines$value,
+        descLine = function() private$..descLine$value,
+        descAnnot = function() private$..descAnnot$value,
+        descCIBand = function() private$..descCIBand$value,
+        descPIBand = function() private$..descPIBand$value,
         predictOV = function() private$..predictOV$value,
         residsOV = function() private$..residsOV$value,
         cooksOV = function() private$..cooksOV$value,
@@ -374,6 +458,17 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..emmWeights = NA,
         ..emmPoints = NA,
         ..piEmm = NA,
+        ..scatDep = NA,
+        ..boxDep = NA,
+        ..boxType = NA,
+        ..boxPoints = NA,
+        ..scatMatrix = NA,
+        ..groupVar = NA,
+        ..groupLines = NA,
+        ..descLine = NA,
+        ..descAnnot = NA,
+        ..descCIBand = NA,
+        ..descPIBand = NA,
         ..predictOV = NA,
         ..residsOV = NA,
         ..cooksOV = NA,
@@ -387,6 +482,7 @@ regInspectResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         modelFit = function() private$.items[["modelFit"]],
         modelComp = function() private$.items[["modelComp"]],
         models = function() private$.items[["models"]],
+        plots = function() private$.items[["plots"]],
         predictOV = function() private$.items[["predictOV"]],
         residsOV = function() private$.items[["residsOV"]],
         cooksOV = function() private$.items[["cooksOV"]],
@@ -883,6 +979,71 @@ regInspectResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                                     "refLevels",
                                                     "ciWidthEmm",
                                                     "emmWeights")))}))$new(options=options)))}))$new(options=options)))
+            self$add(R6::R6Class(
+                inherit = jmvcore::Group,
+                active = list(
+                    scatter = function() private$.items[["scatter"]],
+                    box = function() private$.items[["box"]],
+                    matrix = function() private$.items[["matrix"]]),
+                private = list(),
+                public=list(
+                    initialize=function(options) {
+                        super$initialize(
+                            options=options,
+                            name="plots",
+                            title="Plots")
+                        self$add(jmvcore::Array$new(
+                            options=options,
+                            name="scatter",
+                            title="Dependent vs. Covariates",
+                            visible="(scatDep)",
+                            template=jmvcore::Image$new(
+                                options=options,
+                                title="",
+                                width=450,
+                                height=400,
+                                renderFun=".descScatterPlot",
+                                requiresData=TRUE,
+                                clearWith=list(
+                                    "dep",
+                                    "covs",
+                                    "groupVar",
+                                    "groupLines",
+                                    "descLine",
+                                    "descAnnot",
+                                    "descCIBand",
+                                    "descPIBand",
+                                    "ciWidth"))))
+                        self$add(jmvcore::Array$new(
+                            options=options,
+                            name="box",
+                            title="Dependent by Factors",
+                            visible="(boxDep)",
+                            template=jmvcore::Image$new(
+                                options=options,
+                                title="",
+                                width=450,
+                                height=400,
+                                renderFun=".descBoxPlot",
+                                requiresData=TRUE,
+                                clearWith=list(
+                                    "dep",
+                                    "factors",
+                                    "boxType",
+                                    "boxPoints"))))
+                        self$add(jmvcore::Image$new(
+                            options=options,
+                            name="matrix",
+                            title="Scatterplot Matrix",
+                            width=600,
+                            height=600,
+                            visible="(scatMatrix)",
+                            renderFun=".descMatrixPlot",
+                            requiresData=TRUE,
+                            clearWith=list(
+                                "dep",
+                                "covs",
+                                "groupVar")))}))$new(options=options))
             self$add(jmvcore::Output$new(
                 options=options,
                 name="predictOV",
@@ -1068,11 +1229,38 @@ regInspectBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   whether and how to draw the observed data on the marginal means plots
 #' @param piEmm \code{TRUE} or \code{FALSE} (default), provide a prediction
 #'   interval for the estimated marginal means plots
+#' @param scatDep \code{TRUE} or \code{FALSE} (default), provide a scatterplot
+#'   of the dependent variable against each covariate
+#' @param boxDep \code{TRUE} or \code{FALSE} (default), provide a box/violin
+#'   plot of the dependent variable by each factor
+#' @param boxType \code{'box'} (default) or \code{'violin'}, the shape of the
+#'   dependent-by-factor plots
+#' @param boxPoints \code{TRUE} (default) or \code{FALSE}, overlay jittered
+#'   points on the dependent-by-factor plots
+#' @param scatMatrix \code{TRUE} or \code{FALSE} (default), provide a
+#'   scatterplot matrix of the dependent variable and the covariates
+#' @param groupVar a string naming a factor in \code{data} to colour points by
+#'   in the descriptive scatterplots and scatterplot matrix, or \code{NULL}
+#'   (default) for none
+#' @param groupLines \code{TRUE} or \code{FALSE} (default), with
+#'   \code{groupVar} set, fit a separate line per group instead of one overall
+#'   line
+#' @param descLine \code{TRUE} (default) or \code{FALSE}, draw the fitted
+#'   regression line on the descriptive scatterplots
+#' @param descAnnot \code{TRUE} (default) or \code{FALSE}, show r, p and the
+#'   fitted line's equation on the descriptive scatterplots
+#' @param descCIBand \code{TRUE} or \code{FALSE} (default), draw a confidence
+#'   band on the descriptive scatterplots
+#' @param descPIBand \code{TRUE} or \code{FALSE} (default), draw a prediction
+#'   band on the descriptive scatterplots
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$modelFit} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$modelComp} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$models} \tab \tab \tab \tab \tab an array of model specific results \cr
+#'   \code{results$plots$scatter} \tab \tab \tab \tab \tab an array \cr
+#'   \code{results$plots$box} \tab \tab \tab \tab \tab an array \cr
+#'   \code{results$plots$matrix} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$predictOV} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$residsOV} \tab \tab \tab \tab \tab an output \cr
 #'   \code{results$cooksOV} \tab \tab \tab \tab \tab an output \cr
@@ -1125,7 +1313,18 @@ regInspect <- function(
     emmTables = FALSE,
     emmWeights = TRUE,
     emmPoints = "partial",
-    piEmm = FALSE) {
+    piEmm = FALSE,
+    scatDep = FALSE,
+    boxDep = FALSE,
+    boxType = "box",
+    boxPoints = TRUE,
+    scatMatrix = FALSE,
+    groupVar = NULL,
+    groupLines = FALSE,
+    descLine = TRUE,
+    descAnnot = TRUE,
+    descCIBand = FALSE,
+    descPIBand = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("regInspect requires jmvcore to be installed (restart may be required)")
@@ -1134,15 +1333,18 @@ regInspect <- function(
     if ( ! missing(covs)) covs <- jmvcore::resolveQuo(jmvcore::enquo(covs))
     if ( ! missing(factors)) factors <- jmvcore::resolveQuo(jmvcore::enquo(factors))
     if ( ! missing(weights)) weights <- jmvcore::resolveQuo(jmvcore::enquo(weights))
+    if ( ! missing(groupVar)) groupVar <- jmvcore::resolveQuo(jmvcore::enquo(groupVar))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
             `if`( ! missing(dep), dep, NULL),
             `if`( ! missing(covs), covs, NULL),
             `if`( ! missing(factors), factors, NULL),
-            `if`( ! missing(weights), weights, NULL))
+            `if`( ! missing(weights), weights, NULL),
+            `if`( ! missing(groupVar), groupVar, NULL))
 
     for (v in factors) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
+    for (v in groupVar) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
     if (inherits(emMeans, "formula")) emMeans <- jmvcore::decomposeFormula(emMeans)
 
     options <- regInspectOptions$new(
@@ -1181,7 +1383,18 @@ regInspect <- function(
         emmTables = emmTables,
         emmWeights = emmWeights,
         emmPoints = emmPoints,
-        piEmm = piEmm)
+        piEmm = piEmm,
+        scatDep = scatDep,
+        boxDep = boxDep,
+        boxType = boxType,
+        boxPoints = boxPoints,
+        scatMatrix = scatMatrix,
+        groupVar = groupVar,
+        groupLines = groupLines,
+        descLine = descLine,
+        descAnnot = descAnnot,
+        descCIBand = descCIBand,
+        descPIBand = descPIBand)
 
     analysis <- regInspectClass$new(
         options = options,

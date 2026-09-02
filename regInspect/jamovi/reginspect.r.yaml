@@ -460,6 +460,63 @@ items:
                         - ciWidthEmm
                         - emmWeights
 
+    - name: plots
+      title: Plots
+      type: Group
+      items:
+
+          - name: scatter
+            title: Dependent vs. Covariates
+            type: Array
+            visible: (scatDep)
+            template:
+                type: Image
+                title: ''
+                width: 450
+                height: 400
+                renderFun: .descScatterPlot
+                requiresData: true
+                clearWith:
+                    - dep
+                    - covs
+                    - groupVar
+                    - groupLines
+                    - descLine
+                    - descAnnot
+                    - descCIBand
+                    - descPIBand
+                    - ciWidth
+
+          - name: box
+            title: Dependent by Factors
+            type: Array
+            visible: (boxDep)
+            template:
+                type: Image
+                title: ''
+                width: 450
+                height: 400
+                renderFun: .descBoxPlot
+                requiresData: true
+                clearWith:
+                    - dep
+                    - factors
+                    - boxType
+                    - boxPoints
+
+          - name: matrix
+            title: Scatterplot Matrix
+            type: Image
+            width: 600
+            height: 600
+            visible: (scatMatrix)
+            renderFun: .descMatrixPlot
+            requiresData: true
+            clearWith:
+                - dep
+                - covs
+                - groupVar
+
     - name: predictOV
       type: Output
       title: Predicted values

@@ -173,6 +173,7 @@ regInspectClass <- R6::R6Class(
             private$.initEmm()
             private$.initEmmTable()
             private$.initOutputs()
+            private$.initPlots()
         },
         .run = function() {
             if (is.null(self$options$dep) || self$nModels < 1 || length(self$options$blocks[[1]]) == 0)
@@ -1493,6 +1494,274 @@ regInspectClass <- R6::R6Class(
             # unbalanced factor -- flagged in task_plan.md, not chased for v1).
             ptTerms <- stats::predict(model, type='terms')
             as.numeric(rowSums(ptTerms[, labels[covered], drop=FALSE]) + attr(ptTerms, 'constant'))
+        },
+
+        #### Descriptive plots ----
+        # Model-free views of the analysed variables (dep vs. each covariate,
+        # dep by each factor, a scatterplot matrix), independent of the model
+        # blocks -- so they work even before a block has been built. No
+        # image$state: each render function reads self$data/self$options
+        # directly (requiresData: true in the .r.yaml), the same
+        # state-free pattern corrInspect uses for its own scatterplots.
+        .initPlots = function() {
+            scatterArray <- self$results$plots$scatter
+            for (cov in self$options$covs)
+                scatterArray$addItem(key=cov)
+
+            boxArray <- self$results$plots$box
+            for (factor in self$options$factors)
+                boxArray$addItem(key=factor)
+
+            vars <- c(self$options$dep, self$options$covs)
+            if (length(vars) >= 2) {
+                side <- max(450, 150 * length(vars))
+                self$results$plots$matrix$setSize(side, side)
+            }
+        },
+        .descScatterPlot = function(image, ggtheme, theme, ...) {
+            if ( ! isTRUE(self$options$scatDep) || is.null(self$options$dep))
+                return(FALSE)
+
+            xvar <- image$key
+            if (length(xvar) == 0)
+                return(FALSE)
+
+            private$.drawDescScatter(xvar, self$options$dep, ggtheme, theme)
+        },
+        .descBoxPlot = function(image, ggtheme, theme, ...) {
+            if ( ! isTRUE(self$options$boxDep) || is.null(self$options$dep))
+                return(FALSE)
+
+            fvar <- image$key
+            if (length(fvar) == 0)
+                return(FALSE)
+
+            private$.drawDescBox(fvar, self$options$dep, ggtheme, theme)
+        },
+        .descMatrixPlot = function(image, ggtheme, theme, ...) {
+            if ( ! isTRUE(self$options$scatMatrix) || is.null(self$options$dep))
+                return(FALSE)
+
+            vars <- c(self$options$dep, self$options$covs)
+            if (length(vars) < 2)
+                return(FALSE)
+
+            private$.drawDescMatrix(vars, ggtheme, theme)
+        },
+
+        # an annotated scatter (fitted line, r/p/equation, CI/PI bands),
+        # adapted from corrInspect's .drawAnnotatedScatter with an optional
+        # colour-by-group factor and, with groupLines, one fitted line/band
+        # per group instead of a single overall one. The r/p/equation
+        # annotation always summarises the OVERALL relationship (ignoring
+        # grouping), since a single label can't stand in for several groups.
+        .drawDescScatter = function(xvar, yvar, ggtheme, theme) {
+            data <- self$data
+            x <- jmvcore::toNumeric(data[[xvar]])
+            y <- jmvcore::toNumeric(data[[yvar]])
+            groupVar <- self$options$groupVar
+            g <- if ( ! is.null(groupVar)) data[[groupVar]] else NULL
+
+            ok <- stats::complete.cases(x, y)
+            if ( ! is.null(g)) ok <- ok & ! is.na(g)
+            x <- x[ok]
+            y <- y[ok]
+            if ( ! is.null(g)) g <- droplevels(g[ok])
+
+            if (length(x) < 3 || stats::sd(x) == 0 || stats::sd(y) == 0)
+                return(FALSE)
+
+            df <- data.frame(x=x, y=y)
+            if ( ! is.null(g)) df$g <- g
+
+            textColour <- ggplot2::calc_element('text', themeOnly(ggtheme))$colour
+            pointColour <- '#5DADE2'
+            lineColour <- 'black'
+            ciLevel <- self$options$ciWidth / 100
+            perGroup <- ! is.null(g) && isTRUE(self$options$groupLines)
+
+            p <- if (is.null(g))
+                ggplot2::ggplot(df, ggplot2::aes(x=x, y=y))
+            else
+                ggplot2::ggplot(df, ggplot2::aes(x=x, y=y, colour=g))
+
+            if (isTRUE(self$options$descLine)) {
+                fitSets <- if (perGroup) split(df, df$g) else list(all=df)
+                for (sub in fitSets) {
+                    if (nrow(sub) < 3 || stats::sd(sub$x) == 0)
+                        next
+
+                    fit <- stats::lm(y ~ x, data=sub)
+                    grid <- data.frame(x=seq(min(sub$x), max(sub$x), length.out=100))
+                    bandAlpha <- if (perGroup) .2 else .35
+
+                    if (isTRUE(self$options$descPIBand)) {
+                        pi <- stats::predict(fit, newdata=grid, interval='prediction', level=ciLevel)
+                        ribbon <- cbind(grid, as.data.frame(pi[, c('lwr', 'upr'), drop=FALSE]))
+                        p <- p + ggplot2::geom_ribbon(
+                            data=ribbon, mapping=ggplot2::aes(x=x, ymin=lwr, ymax=upr),
+                            inherit.aes=FALSE, fill='#F48FB1', alpha=bandAlpha)
+                    }
+                    if (isTRUE(self$options$descCIBand)) {
+                        ci <- stats::predict(fit, newdata=grid, interval='confidence', level=ciLevel)
+                        ribbon <- cbind(grid, as.data.frame(ci[, c('lwr', 'upr'), drop=FALSE]))
+                        p <- p + ggplot2::geom_ribbon(
+                            data=ribbon, mapping=ggplot2::aes(x=x, ymin=lwr, ymax=upr),
+                            inherit.aes=FALSE, fill=pointColour, alpha=bandAlpha)
+                    }
+                }
+            }
+
+            p <- p + ggplot2::geom_point(alpha=.7)
+
+            if (isTRUE(self$options$descLine)) {
+                if (perGroup)
+                    p <- p + ggplot2::geom_smooth(method='lm', formula=y ~ x, se=FALSE)
+                else
+                    p <- p + ggplot2::geom_smooth(method='lm', formula=y ~ x, se=FALSE, colour=lineColour)
+            }
+
+            if (isTRUE(self$options$descAnnot)) {
+                fit <- pearsonFit(x, y)
+                coefv <- stats::coef(stats::lm(y ~ x, data=df))
+                lines <- c(
+                    sprintf('r = %.3f', fit$r), pText(fit$p),
+                    sprintf('%s = %.3g + %.3g·%s', yvar, coefv[1], coefv[2], xvar))
+                label <- paste(lines, collapse='\n')
+                xRange <- range(x)
+                xPad <- diff(xRange) * .02
+                p <- p + ggplot2::annotate('text', x=xRange[1] + xPad, y=Inf, hjust=0, vjust=1.3,
+                                            label=label, colour=textColour, size=3.6)
+            }
+
+            yRange <- range(y)
+            ySpan <- diff(yRange)
+            topPad <- if (isTRUE(self$options$descAnnot)) .15 else .05
+            p <- p + ggplot2::coord_cartesian(ylim=c(yRange[1] - ySpan * .05, yRange[2] + ySpan * topPad))
+
+            p <- p +
+                ggplot2::labs(x=xvar, y=yvar, colour=groupVar) +
+                ggtheme +
+                ggplot2::theme(
+                    axis.text=ggplot2::element_text(colour='black'),
+                    axis.title=ggplot2::element_text(colour='black'),
+                    axis.ticks=ggplot2::element_line(colour='black'))
+
+            print(p)
+            TRUE
+        },
+
+        # the dependent variable by one factor: box or violin, with optional
+        # jittered points.
+        .drawDescBox = function(fvar, yvar, ggtheme, theme) {
+            data <- self$data
+            y <- jmvcore::toNumeric(data[[yvar]])
+            f <- data[[fvar]]
+
+            ok <- stats::complete.cases(y) & ! is.na(f)
+            y <- y[ok]
+            f <- droplevels(f[ok])
+
+            if (length(y) < 2 || nlevels(f) < 1)
+                return(FALSE)
+
+            df <- data.frame(f=f, y=y)
+            pointColour <- '#5DADE2'
+
+            p <- ggplot2::ggplot(df, ggplot2::aes(x=f, y=y))
+
+            if (identical(self$options$boxType, 'violin'))
+                p <- p + ggplot2::geom_violin(fill=pointColour, alpha=.3, colour='black')
+            else
+                p <- p + ggplot2::geom_boxplot(fill=pointColour, alpha=.3, colour='black', outlier.shape=NA)
+
+            if (isTRUE(self$options$boxPoints))
+                p <- p + ggplot2::geom_jitter(width=.15, height=0, alpha=.5, colour=pointColour)
+
+            p <- p +
+                ggplot2::labs(x=fvar, y=yvar) +
+                ggtheme +
+                ggplot2::theme(
+                    axis.text=ggplot2::element_text(colour='black'),
+                    axis.title=ggplot2::element_text(colour='black'),
+                    axis.ticks=ggplot2::element_line(colour='black'))
+
+            print(p)
+            TRUE
+        },
+
+        # scatterplot matrix for the dependent variable + covariates,
+        # adapted from corrInspect's .drawScatterMatrix (lower triangle =
+        # mini scatter + lm line + r, diagonal = variable name, upper
+        # triangle blank), with points optionally coloured by groupVar.
+        .drawDescMatrix = function(vars, ggtheme, theme) {
+            data <- self$data
+            n <- length(vars)
+            textColour <- ggplot2::calc_element('text', themeOnly(ggtheme))$colour
+            pointColour <- '#5DADE2'
+            lineColour <- 'black'
+            groupVar <- self$options$groupVar
+            g <- if ( ! is.null(groupVar)) data[[groupVar]] else NULL
+
+            idx <- function(row, col) (row - 1) * n + col
+            panels <- vector('list', n * n)
+
+            for (row in seq_len(n)) {
+                for (col in seq_len(n)) {
+                    if (row == col) {
+                        panels[[idx(row, col)]] <- grid::textGrob(
+                            vars[row], gp=grid::gpar(col=textColour, fontsize=10))
+                    } else if (row > col) {
+                        x <- jmvcore::toNumeric(data[[ vars[col] ]])
+                        y <- jmvcore::toNumeric(data[[ vars[row] ]])
+                        ok <- stats::complete.cases(x, y)
+                        if ( ! is.null(g)) ok <- ok & ! is.na(g)
+                        x <- x[ok]
+                        y <- y[ok]
+                        gp <- if ( ! is.null(g)) g[ok] else NULL
+
+                        if (length(x) < 3 || stats::sd(x) == 0 || stats::sd(y) == 0) {
+                            panels[[idx(row, col)]] <- grid::nullGrob()
+                        } else {
+                            r <- stats::cor(x, y)
+                            df <- data.frame(x=x, y=y)
+                            if ( ! is.null(gp)) df$g <- gp
+                            xPanelRange <- range(x)
+                            xPanelPad <- diff(xPanelRange) * 0.05
+
+                            pnl <- if (is.null(gp))
+                                ggplot2::ggplot(df, ggplot2::aes(x=x, y=y)) +
+                                    ggplot2::geom_point(colour=pointColour, alpha=0.6, size=0.8)
+                            else
+                                ggplot2::ggplot(df, ggplot2::aes(x=x, y=y, colour=g)) +
+                                    ggplot2::geom_point(alpha=0.6, size=0.8)
+
+                            pnl <- pnl +
+                                ggplot2::geom_smooth(method='lm', formula=y ~ x, se=FALSE,
+                                                      colour=lineColour, linewidth=0.5) +
+                                ggplot2::annotate('text', x=xPanelRange[1] + xPanelPad, y=Inf,
+                                                   hjust=0, vjust=1.3,
+                                                   label=sprintf('r = %.2f', r),
+                                                   colour=textColour, size=2.6) +
+                                ggplot2::theme_minimal(base_size=6) +
+                                ggplot2::theme(
+                                    legend.position='none',
+                                    axis.text=ggplot2::element_text(colour='black', size=5),
+                                    axis.title=ggplot2::element_blank(),
+                                    axis.ticks=ggplot2::element_line(colour='black'),
+                                    panel.grid=ggplot2::element_blank(),
+                                    panel.border=ggplot2::element_rect(colour='grey85', fill=NA))
+
+                            panels[[idx(row, col)]] <- ggplot2::ggplotGrob(pnl)
+                        }
+                    } else {
+                        panels[[idx(row, col)]] <- grid::nullGrob()
+                    }
+                }
+            }
+
+            gridExtra::grid.arrange(grobs=panels, nrow=n, ncol=n)
+            TRUE
         },
 
         #### Helper functions ----
