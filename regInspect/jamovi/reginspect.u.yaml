@@ -348,6 +348,13 @@ children:
                 children:
                   - type: CheckBox
                     name: emmPlots
+                    children:
+                      - type: ComboBox
+                        name: emmPoints
+                        enable: (emmPlots)
+                      - type: CheckBox
+                        name: piEmm
+                        enable: (emmPlots)
                   - type: CheckBox
                     name: emmTables
   - type: CollapseBox

@@ -41,7 +41,9 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             ciWidthEmm = 95,
             emmPlots = TRUE,
             emmTables = FALSE,
-            emmWeights = TRUE, ...) {
+            emmWeights = TRUE,
+            emmPoints = "partial",
+            piEmm = FALSE, ...) {
 
             super$initialize(
                 package="regInspect",
@@ -232,6 +234,18 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "emmWeights",
                 emmWeights,
                 default=TRUE)
+            private$..emmPoints <- jmvcore::OptionList$new(
+                "emmPoints",
+                emmPoints,
+                options=list(
+                    "none",
+                    "partial",
+                    "raw"),
+                default="partial")
+            private$..piEmm <- jmvcore::OptionBool$new(
+                "piEmm",
+                piEmm,
+                default=FALSE)
             private$..predictOV <- jmvcore::OptionOutput$new(
                 "predictOV")
             private$..residsOV <- jmvcore::OptionOutput$new(
@@ -275,6 +289,8 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..emmPlots)
             self$.addOption(private$..emmTables)
             self$.addOption(private$..emmWeights)
+            self$.addOption(private$..emmPoints)
+            self$.addOption(private$..piEmm)
             self$.addOption(private$..predictOV)
             self$.addOption(private$..residsOV)
             self$.addOption(private$..cooksOV)
@@ -315,6 +331,8 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         emmPlots = function() private$..emmPlots$value,
         emmTables = function() private$..emmTables$value,
         emmWeights = function() private$..emmWeights$value,
+        emmPoints = function() private$..emmPoints$value,
+        piEmm = function() private$..piEmm$value,
         predictOV = function() private$..predictOV$value,
         residsOV = function() private$..residsOV$value,
         cooksOV = function() private$..cooksOV$value,
@@ -354,6 +372,8 @@ regInspectOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..emmPlots = NA,
         ..emmTables = NA,
         ..emmWeights = NA,
+        ..emmPoints = NA,
+        ..piEmm = NA,
         ..predictOV = NA,
         ..residsOV = NA,
         ..cooksOV = NA,
@@ -839,6 +859,7 @@ regInspectResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                                 height=400,
                                                 renderFun=".emmPlot",
                                                 visible="(emmPlots)",
+                                                requiresData=TRUE,
                                                 clearWith=list(
                                                     "dep",
                                                     "blocks",
@@ -846,7 +867,9 @@ regInspectResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                                     "refLevels",
                                                     "ciEmm",
                                                     "ciWidthEmm",
-                                                    "emmWeights")))
+                                                    "emmWeights",
+                                                    "emmPoints",
+                                                    "piEmm")))
                                             self$add(jmvcore::Table$new(
                                                 options=options,
                                                 name="emmTable",
@@ -1041,6 +1064,10 @@ regInspectBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   marginal means tables
 #' @param emmWeights \code{TRUE} (default) or \code{FALSE}, weigh each cell
 #'   equally or weigh them according to the cell frequency
+#' @param emmPoints \code{'none'}, \code{'partial'} (default) or \code{'raw'},
+#'   whether and how to draw the observed data on the marginal means plots
+#' @param piEmm \code{TRUE} or \code{FALSE} (default), provide a prediction
+#'   interval for the estimated marginal means plots
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$modelFit} \tab \tab \tab \tab \tab a table \cr
@@ -1096,7 +1123,9 @@ regInspect <- function(
     ciWidthEmm = 95,
     emmPlots = TRUE,
     emmTables = FALSE,
-    emmWeights = TRUE) {
+    emmWeights = TRUE,
+    emmPoints = "partial",
+    piEmm = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("regInspect requires jmvcore to be installed (restart may be required)")
@@ -1150,7 +1179,9 @@ regInspect <- function(
         ciWidthEmm = ciWidthEmm,
         emmPlots = emmPlots,
         emmTables = emmTables,
-        emmWeights = emmWeights)
+        emmWeights = emmWeights,
+        emmPoints = emmPoints,
+        piEmm = piEmm)
 
     analysis <- regInspectClass$new(
         options = options,

@@ -396,6 +396,46 @@ options:
             `TRUE` (default) or `FALSE`, weigh each cell equally or weigh them according to
             the cell frequency
 
+    - name: emmPoints
+      title: Observed data
+      type: List
+      options:
+        - name: none
+          title: None
+        - name: partial
+          title: Partial residuals
+        - name: raw
+          title: Raw values
+      default: partial
+      description:
+          ui: >
+              draw the analysed observations on the marginal means plot.
+              'Partial residuals' (default) adds back each observation's
+              residual to the plotted term's own fitted contribution, so the
+              cloud stays correct on the plot's adjusted scale -- with a
+              single predictor this is identical to the raw dependent
+              variable. 'Raw values' plots the dependent variable itself,
+              which is only on the same scale as the plot when the model has
+              no other predictors. Suppressed on an axis that bins a
+              covariate to -1SD/Mean/+1SD, where no observation has a real
+              position.
+          R: >
+            `'none'`, `'partial'` (default) or `'raw'`, whether and how to
+            draw the observed data on the marginal means plots
+
+    - name: piEmm
+      title: Prediction interval
+      type: Bool
+      default: false
+      description:
+          ui: >
+              a prediction interval band/bars alongside the confidence
+              interval, describing where a new observation at the plotted
+              reference point would be expected to fall.
+          R: >
+            `TRUE` or `FALSE` (default), provide a prediction interval
+            for the estimated marginal means plots
+
     - name: predictOV
       title: Predicted values
       type: Output

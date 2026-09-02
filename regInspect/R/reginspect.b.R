@@ -1238,6 +1238,19 @@ regInspectClass <- R6::R6Class(
 
                         d <- emMeansTables[[i]][[j]]
 
+                        if (self$options$piEmm) {
+                            sigma <- summary(self$models[[i]])$sigma
+                            resDf <- if ('df' %in% names(d))
+                                d[['df']]
+                            else
+                                stats::df.residual(self$models[[i]])
+                            alpha <- 1 - self$options$ciWidthEmm / 100
+                            tCrit <- stats::qt(1 - alpha / 2, resDf)
+                            halfWidth <- tCrit * sqrt(d[['SE']]^2 + sigma^2)
+                            d[['lower.PI']] <- d[['emmean']] - halfWidth
+                            d[['upper.PI']] <- d[['emmean']] + halfWidth
+                        }
+
                         for (k in 1:3) {
                             if ( ! is.na(termB64[k])) {
                                 if (term[k] %in% covs) {
@@ -1263,7 +1276,11 @@ regInspectClass <- R6::R6Class(
                         labels <- list('x'=term[1], 'y'=dep, 'lines'=term[2], 'plots'=term[3])
                         labels <- lapply(labels, function(x) if (is.na(x)) NULL else x)
 
-                        image$setState(list(data=d, names=names, labels=labels, cont=cont))
+                        image$setState(list(
+                            data=d, names=names, labels=labels, cont=cont,
+                            modelNo=i, term=term, termB64=termB64,
+                            otherVars=setdiff(terms, term)
+                        ))
                     }
                 }
             }
@@ -1276,6 +1293,11 @@ regInspectClass <- R6::R6Class(
             names <- image$state$names
             labels <- image$state$labels
             cont <- image$state$cont
+            modelNo <- image$state$modelNo
+            term <- image$state$term
+            termB64 <- image$state$termB64
+            otherVars <- image$state$otherVars
+            covs <- self$options$covs
 
             dodge <- position_dodge(0.4)
 
@@ -1287,12 +1309,40 @@ regInspectClass <- R6::R6Class(
                 color <- names$lines
             }
 
+            captions <- character(0)
+
+            ptData <- NULL
+            if (self$options$emmPoints != 'none') {
+                groupIsCov <- ( ! is.na(term[2]) && term[2] %in% covs)
+                facetIsCov <- ( ! is.na(term[3]) && term[3] %in% covs)
+
+                if (groupIsCov || facetIsCov) {
+                    suppressedVar <- if (groupIsCov) term[2] else term[3]
+                    captions <- c(captions, jmvcore::format(
+                        .("Observed data not shown: '{var}' is a covariate here, binned to -1SD/Mean/+1SD -- no observation has a real position on it."),
+                        var=suppressedVar))
+                } else {
+                    ptData <- private$.emmPointData(modelNo, term, termB64, names)
+                }
+            }
+
+            if (self$options$piEmm && length(otherVars) > 0) {
+                captions <- c(captions, jmvcore::format(
+                    .("Prediction interval for a new observation at this reference point ({vars} held at their mean, or averaged across levels)."),
+                    vars=listItems(self, otherVars)))
+            }
+
             p <- ggplot(data=data,
                         aes_string(x=names$x, y=names$y, group=names$lines),
                         inherit.aes = FALSE)
 
             if (cont) {
-                p <- p + geom_line(aes_string(color=color, fill=color, linetype=lty))
+                if (self$options$piEmm && is.null(names$plots) && is.null(names$lines))
+                    p <- p +
+                        geom_ribbon(
+                            aes_string(x=names$x, ymin='lower.PI', ymax='upper.PI'),
+                            show.legend=FALSE, alpha=.2, fill='#F48FB1'
+                        )
 
                 if (self$options$ciEmm && is.null(names$plots) && is.null(names$lines))
                     p <- p +
@@ -1300,7 +1350,32 @@ regInspectClass <- R6::R6Class(
                             aes_string(x=names$x, ymin=names$lower, ymax=names$upper),
                             show.legend=TRUE, alpha=.3
                         )
+
+                if ( ! is.null(ptData))
+                    p <- p + geom_point(
+                        data=ptData, mapping=aes_string(x=names$x, y='.y', color=color, fill=color),
+                        inherit.aes=FALSE, alpha=.4
+                    )
+
+                p <- p + geom_line(aes_string(color=color, fill=color, linetype=lty))
             } else {
+                if (self$options$piEmm)
+                    p <- p +
+                        geom_errorbar(
+                            aes_string(
+                                x=names$x, ymin='lower.PI', ymax='upper.PI',
+                                color=names$lines, fill=names$lines
+                            ),
+                            width=.05, size=.5, alpha=.4, position=dodge, show.legend=FALSE
+                        )
+
+                if ( ! is.null(ptData))
+                    p <- p + geom_point(
+                        data=ptData, mapping=aes_string(x=names$x, y='.y', color=names$lines, fill=names$lines),
+                        inherit.aes=FALSE, alpha=.4,
+                        position=position_jitterdodge(jitter.width=.1, dodge.width=.4)
+                    )
+
                 p <- p +
                     geom_point(
                         aes_string(color=names$lines, fill=names$lines),
@@ -1327,7 +1402,97 @@ regInspectClass <- R6::R6Class(
                 labs(x=labels$x, y=labels$y, fill=labels$lines, color=labels$lines, linetype=labels$lines) +
                 ggtheme + theme(panel.spacing = unit(2, "lines"))
 
+            if (length(captions) > 0)
+                p <- p + labs(caption=paste(captions, collapse='\n'))
+
             return(p)
+        },
+
+        # observed points to overlay on an emm plot for `term` (up to 3
+        # variable names, NA-padded): x = the observation's own value for
+        # term[1]; y = partial residuals (this term's own fitted
+        # contribution + the observation's residual, jmvcore/car's usual
+        # component+residual definition) or the raw dependent variable,
+        # per `emmPoints`. Colour/facet columns reuse the B64 names already
+        # used by the emm summary table `data`, so the same aes_string()
+        # mappings apply to both layers. Returns NULL if this term has no
+        # own contribution to the model (e.g. only appears in a higher-order
+        # interaction with a variable outside `term`).
+        .emmPointData = function(modelNo, term, termB64, names) {
+            dp <- self$dataProcessed
+            depB64 <- jmvcore::toB64(self$options$dep)
+            covs <- self$options$covs
+
+            x64 <- termB64[1]
+            if (term[1] %in% covs) {
+                x <- dp[[x64]]
+            } else {
+                col <- dp[[x64]]
+                x <- factor(jmvcore::fromB64(as.character(col)), levels=jmvcore::fromB64(levels(col)))
+            }
+
+            if (self$options$emmPoints == 'raw') {
+                y <- dp[[depB64]]
+            } else {
+                fit <- private$.partialFitForTerm(modelNo, termB64[ ! is.na(termB64)])
+                if (is.null(fit))
+                    return(NULL)
+                y <- fit + self$residuals[[modelNo]]
+            }
+
+            df <- data.frame(x=x, .y=y)
+            names(df)[1] <- names$x
+
+            if ( ! is.na(termB64[2])) {
+                col <- dp[[ termB64[2] ]]
+                df[[ names$lines ]] <- factor(jmvcore::fromB64(as.character(col)), levels=jmvcore::fromB64(levels(col)))
+            }
+            if ( ! is.na(termB64[3])) {
+                col <- dp[[ termB64[3] ]]
+                df[[ names$plots ]] <- factor(jmvcore::fromB64(as.character(col)), levels=jmvcore::fromB64(levels(col)))
+            }
+
+            return(df)
+        },
+
+        # partial fit for a set of variables (B64 names, no NAs): the sum of
+        # every model term whose own variables are entirely contained in
+        # `termB64`, evaluated at each observation's own data (car/termplot's
+        # "component" -- add residuals for the "component + residual", i.e.
+        # partial residual). With a single-predictor model this equals the
+        # model's full fitted value, so partial residuals reduce to the raw
+        # dependent variable exactly.
+        .partialFitForTerm = function(modelNo, termB64) {
+            model <- self$models[[modelNo]]
+            tt <- stats::terms(model)
+            labels <- attr(tt, 'term.labels')
+            if (length(labels) == 0)
+                return(NULL)
+
+            factorsMat <- attr(tt, 'factors')
+            varNames <- rownames(factorsMat)
+
+            covered <- vapply(labels, function(lbl) {
+                vars <- varNames[factorsMat[, lbl] > 0]
+                all(vars %in% termB64)
+            }, logical(1))
+
+            if ( ! any(covered))
+                return(NULL)
+
+            # predict(..., type='terms') mean-centres every term column
+            # (attr(,'constant') is what was subtracted out, summed across
+            # ALL terms); summing only the covered subset and adding that
+            # constant back gives a prediction anchored on the response's
+            # own scale, using each observation's own value for the terms in
+            # `termB64` and every other term's mean contribution -- i.e.
+            # exactly the reference-grid definition this needs, matching a
+            # continuous covariate held at its mean exactly, and a factor at
+            # its frequency-weighted average (a mild mismatch from emmeans'
+            # default equal-weighting, only when 'termB64' excludes an
+            # unbalanced factor -- flagged in task_plan.md, not chased for v1).
+            ptTerms <- stats::predict(model, type='terms')
+            as.numeric(rowSums(ptTerms[, labels[covered], drop=FALSE]) + attr(ptTerms, 'constant'))
         },
 
         #### Helper functions ----

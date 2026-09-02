@@ -434,6 +434,7 @@ items:
                       height: 400
                       renderFun: .emmPlot
                       visible: (emmPlots)
+                      requiresData: true
                       clearWith:
                         - dep
                         - blocks
@@ -442,6 +443,8 @@ items:
                         - ciEmm
                         - ciWidthEmm
                         - emmWeights
+                        - emmPoints
+                        - piEmm
 
                     - name: emmTable
                       title: ''
