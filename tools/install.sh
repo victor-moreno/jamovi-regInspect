@@ -6,12 +6,11 @@
 #   bash install.sh desktop
 #   bash install.sh docker [container]     (default container: jamovi)
 #
-# Unlike jamovi-corr/jamovi-jmvplus's install.sh, the desktop target here
-# does NOT set a custom R_LIBS_USER ($HOME/R/.Rlib-arm etc.) -- that path
-# doesn't exist on an R installation managed by rig. Instead it just uses
-# whichever R `Rscript` resolves to (respecting ~/.Rprofile, which appends
-# jamovi.app's bundled module library -- see the user's ~/.Rprofile and
-# jamovi-linreg/task_plan.md's "Errors log" for why). Pick the active R
+# The desktop target uses whichever R `Rscript` resolves to (respecting
+# ~/.Rprofile, which appends jamovi.app's bundled module library -- see the
+# user's ~/.Rprofile and jamovi-linreg/task_plan.md's "Errors log" for why)
+# rather than a custom R_LIBS_USER ($HOME/R/.Rlib-arm etc.) -- that path
+# doesn't exist on an R installation managed by rig. Pick the active R
 # version with `rig default <version>` before running this if needed; it
 # must match the R version jamovi.app itself bundles, or jmvcore segfaults
 # on load.
