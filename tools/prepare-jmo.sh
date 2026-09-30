@@ -3,24 +3,20 @@
 # Metadata-only: it rewrites jamovi's compatibility stamp and rebuilds no R code.
 #
 #   bash tools/prepare-jmo.sh current 4.6.0
-#   bash tools/prepare-jmo.sh solid 4.5.0 path/to/regInspect_0.1.0.jmo
+#   bash tools/prepare-jmo.sh solid 4.5.0 path/to/<module>_<version>.jmo
 #
 # TWO artifacts per series cover every operating system. jamovi's only
 # compatibility gate is an exact string compare of the artifact's rVersion
 # against the app's JAMOVI_R_VERSION, and that string carries the R version and
-# the CPU but no OS component -- so the mac/linux/windows matrix this script
-# used to emit was three copies of the same file. See README.md.
+# the CPU but no OS component.
 #
 # Safe only for a module with no compiled code; the guard below enforces that.
+# A module that bundles compiled code needs a real build on each CPU instead.
 set -euo pipefail
+source "$(dirname "$0")/_module.sh"
 
 SERIES="${1:-}"
 R_VERSION="${2:-}"
-
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-MODULE_DIR="$ROOT/regInspect"
-MODULE="$(awk -F': *' '$1 == "Package" { print $2; exit }' "$MODULE_DIR/DESCRIPTION")"
-VERSION="$(awk -F': *' '$1 == "Version" { print $2; exit }' "$MODULE_DIR/DESCRIPTION")"
 SOURCE="${3:-$MODULE_DIR/${MODULE}_${VERSION}.jmo}"
 
 usage() { echo "usage: prepare-jmo.sh {solid|current} R_VERSION [source.jmo]" >&2; }
@@ -60,7 +56,8 @@ mkdir -p "$ROOT/dist"
 for ARCH in x64 arm64; do
   TARGET="${R_VERSION}-${ARCH}"
   OUT="$ROOT/dist/${MODULE}_${VERSION}_${SERIES}_R${R_VERSION}_${ARCH}.jmo"
-  TMP="$(mktemp -d "${TMPDIR:-/tmp}/${MODULE}-jmo.XXXXXX")"
+  # scratch space inside the project, not the system /tmp
+  TMP="$(mktemp -d "$ROOT/.tmp/${MODULE}-jmo.XXXXXX")"
 
   unzip -q "$SOURCE" -d "$TMP"
   for META in "$TMP/$MODULE/jamovi.yaml" "$TMP/$MODULE/jamovi-full.yaml"; do

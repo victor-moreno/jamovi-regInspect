@@ -19,10 +19,8 @@ esac
 
 command -v gh >/dev/null || { echo "error: gh CLI is required" >&2; exit 1; }
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-MODULE_DIR="$ROOT/regInspect"
-MODULE="$(awk -F': *' '$1 == "Package" { print $2; exit }' "$MODULE_DIR/DESCRIPTION")"
-VERSION="$(awk -F': *' '$1 == "Version" { print $2; exit }' "$MODULE_DIR/DESCRIPTION")"
+source "$(dirname "$0")/_module.sh"
+
 REPO="$(cd "$ROOT" && gh repo view --json nameWithOwner -q .nameWithOwner)"
 TAG="v${VERSION}"
 
