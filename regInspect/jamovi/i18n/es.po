@@ -348,7 +348,7 @@ msgstr "Regresión lineal con datos observados y gráficos descriptivos"
 #: R/reginspect.b.R
 #: regInspect/results/models.template/coef.columns.title
 msgid "Lower"
-msgstr "Más bajo"
+msgstr "Inferior"
 
 #: R/reginspect.b.R
 msgid "Mahalanobis ChiSq"
